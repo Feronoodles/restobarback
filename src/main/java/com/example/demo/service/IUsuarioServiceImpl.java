@@ -20,10 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class IUsuarioServiceImpl implements IUsuarioService{
 
     
-    @Autowired
+    
     private IUsuarioDao usuariodao;
-    
-    
+
+    public IUsuarioServiceImpl(IUsuarioDao usuariodao) {
+        this.usuariodao = usuariodao;
+    }
     
     
     @Override

@@ -47,22 +47,8 @@ public class Pedidos implements Serializable{
     public void prePersist(){
         createAt = new Date();
     }
-    //jsonbackreference es para evitar un bucle
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JoinTable(name="Platos_Pedidos",
-            joinColumns = @JoinColumn(name="pedidosId",referencedColumnName = "pedidosId"),
-            inverseJoinColumns = @JoinColumn(name="platosId",referencedColumnName = "platosId"))
-    private Set<Platos>platos = new HashSet<Platos>();
 
-    public Set<Platos> getPlatos() {
-        return platos;
-    }
 
-    public void setPlatos(Set<Platos> platos) {
-        this.platos = platos;
-    }
-    
 
     public Long getPedidosId() {
         return pedidosId;
@@ -96,10 +82,10 @@ public class Pedidos implements Serializable{
         this.createAt = createAt;
     }
     //metodo para añadir de muchos a muchos diferentes platos al pedido
-    public void addPedidosPlatos(Platos plato)
-    {
-        this.platos.add(plato);
-    }
+ //   public void addPedidosPlatos(Platos plato)
+  //  {
+  //      this.platos.add(plato);
+  //  }
     
     
     private static final Long serialVersionUID = 1L;
