@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Platos;
+import com.example.demo.model.platos.MPlatosRegistro;
+import com.example.demo.model.platos.MPlatosVista;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +31,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api")
 public class PlatosRestController {
     
-    @Autowired
+    
     private IPlatosService platoService;
+    
+    public PlatosRestController(IPlatosService platoService)
+    {
+        this.platoService= platoService;
+    }
+    
+    
+    @GetMapping("/ver_platos")
+    public ResponseEntity<Page<MPlatosVista>> mostrarPlatos(@PageableDefault (size = 10) Pageable paginacion)
+    {
+        return ResponseEntity.ok(platoService.findAll(paginacion).map(MPlatosVista::new));
+    }
     
     
     @GetMapping("/platos/{index}/{size}")
@@ -47,9 +64,10 @@ public class PlatosRestController {
     
     
     @PostMapping("/crear_plato")
-    public ResponseEntity<?> agregarPlato(@RequestBody Platos plato)
+    public ResponseEntity<?> agregarPlato(@RequestBody MPlatosRegistro platoRegistro)
     {
-        platoService.savePlatos(plato);
+        
+        platoService.savePlatos(platoRegistro);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
     

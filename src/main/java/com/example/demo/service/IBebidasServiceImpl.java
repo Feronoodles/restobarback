@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class IBebidasServiceImpl implements IBebidasService{
 
-    public IBebidasDao bebidasDao;
+    private IBebidasDao bebidasDao;
     
     public IBebidasServiceImpl(IBebidasDao bebidasDao) {
         this.bebidasDao = bebidasDao;

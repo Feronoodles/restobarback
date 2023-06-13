@@ -5,7 +5,10 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Platos;
+import com.example.demo.model.platos.MPlatosRegistro;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -14,7 +17,9 @@ import java.util.List;
 public interface IPlatosService {
     public List<Platos> findAll(int index,int size);
     
-    public void savePlatos(Platos platos);
+    public Page<Platos> findAll(Pageable paginacion);
+    
+    public void savePlatos(MPlatosRegistro platosRegistro);
     
     public Platos findPlatosByID(Long platosId);
 }

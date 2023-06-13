@@ -4,6 +4,7 @@
  */
 package com.example.demo.entity;
 
+import com.example.demo.model.platos.MPlatosRegistro;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +40,12 @@ public class Platos implements Serializable{
 //            inverseJoinColumns = @JoinColumn(name="pedidosId",referencedColumnName = "pedidosId"))
 //    private Set<Pedidos>pedidos = new HashSet<Pedidos>();
 
+    public Platos(){ }
+    
+    public Platos(MPlatosRegistro platoRegistro){
+        this.nombre = platoRegistro.nombre();
+        this.precio = platoRegistro.precio();
+    }
 
     public Long getPlatosId() {
         return platosId;

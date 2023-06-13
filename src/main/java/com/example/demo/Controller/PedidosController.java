@@ -5,9 +5,13 @@
 package com.example.demo.Controller;
 
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.pedidos.MPedidoVista;
 import com.example.demo.service.IPedidosService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,31 +28,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class PedidosController {
     
-    @Autowired
+  
     private IPedidosService pedidosService;
     
-    
-    @GetMapping("/pedidos")
-    public ResponseEntity<?> listaPedidos()
+    public PedidosController( IPedidosService pedidosService)
     {
-        List<Pedidos> listaPedidos = pedidosService.findAll();
-        
-        if(listaPedidos!=null)
-        {
-            if(listaPedidos.size()!=0)
-            {
-                return new ResponseEntity<>(listaPedidos,HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }        
+        this.pedidosService = pedidosService;
     }
+    @GetMapping("/ver_pedidos")
+    public ResponseEntity<Page<MPedidoVista>> mostrarPedidos(@PageableDefault(size = 10) Pageable paginacion)
+    {
+        return ResponseEntity.ok(pedidosService.findAll(paginacion).map(MPedidoVista::new));
+    }
+    
+
     
     @PostMapping("/crear_pedidos")
     public ResponseEntity<Void> agregarPedidos(@RequestBody Pedidos pedidos)

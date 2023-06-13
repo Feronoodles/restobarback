@@ -6,8 +6,10 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,10 +42,15 @@ public class Pedidos implements Serializable{
     
     private double gastoTotal;
     
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pedidosId",referencedColumnName = "pedidosId")
+    private List<PedidoDetalle> pedidoDetalle = new ArrayList<>();
     
     @Column(name="create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
+
+ 
    
     @PrePersist
     public void prePersist(){
@@ -80,6 +89,13 @@ public class Pedidos implements Serializable{
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+       public List<PedidoDetalle> getPedidoDetalle() {
+        return pedidoDetalle;
+    }
+
+    public void setPedidoDetalle(List<PedidoDetalle> pedidoDetalle) {
+        this.pedidoDetalle = pedidoDetalle;
     }
     //metodo para añadir de muchos a muchos diferentes platos al pedido
  //   public void addPedidosPlatos(Platos plato)

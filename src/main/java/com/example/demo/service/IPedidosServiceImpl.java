@@ -6,8 +6,13 @@ package com.example.demo.service;
 
 import com.example.demo.dao.IPedidosDao;
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.pedidos.MPedidoVista;
+import com.example.demo.model.pedidos_detalle.MPedidoDetalleVista;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class IPedidosServiceImpl implements IPedidosService{
 
-    @Autowired
+   
     private IPedidosDao pedao;
+    
+    public IPedidosServiceImpl(IPedidosDao pedao)
+    {
+        this.pedao = pedao;
+    }
     
     @Override
     @Transactional(readOnly = true)
@@ -41,6 +51,12 @@ public class IPedidosServiceImpl implements IPedidosService{
     @Override
     public Pedidos getPedidoBySQL(Long pedidosId) {
         return (Pedidos) pedao.findPedidoBySQL(pedidosId);
+    }
+
+    @Override
+    public Page<Pedidos> findAll(Pageable paginacion) {
+        
+        return (Page<Pedidos>) pedao.findAll(paginacion);
     }
     
 }

@@ -6,6 +6,8 @@ package com.example.demo.dao;
 
 import com.example.demo.entity.Pedidos;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,6 +16,7 @@ import org.springframework.data.repository.CrudRepository;
  * @author User
  */
 public interface IPedidosDao extends CrudRepository<Pedidos, Long>{
+    public Page<Pedidos> findAll(Pageable paginacion);
     
     public List<Pedidos> findByUsuarioId(Long id);
     

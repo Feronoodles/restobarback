@@ -4,6 +4,7 @@
  */
 package com.example.demo.entity;
 
+import com.example.demo.model.pedidos_detalle.MPedidoDetalleRegistro;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,11 +36,19 @@ public class PedidoDetalle implements Serializable{
     
     private int cantidadBebidas;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Pedidos pedido;
+    
+    private Long pedidosId;
     
     public PedidoDetalle(){
         
+    }
+    public PedidoDetalle(MPedidoDetalleRegistro pedidoDetalleRegistro,Platos plato,Bebidas bebida)
+    {
+        this.plato = plato;
+        this.cantidadPlatos = pedidoDetalleRegistro.cantidadPlatos();
+        this.bebida = bebida;
+        this.cantidadBebidas = pedidoDetalleRegistro.cantidadBebidas();
+        this.pedidosId = pedidoDetalleRegistro.pedidoId();
     }
 
     public Long getPedidoDetalleId() {
@@ -82,12 +91,12 @@ public class PedidoDetalle implements Serializable{
         this.cantidadBebidas = cantidadBebidas;
     }
 
-    public Pedidos getPedido() {
-        return pedido;
+    public Long getpedidoId() {
+        return pedidosId;
     }
 
-    public void setPedido(Pedidos pedido) {
-        this.pedido = pedido;
+    public void setPedido(Long pedidosId) {
+        this.pedidosId = pedidosId;
     }
     
     

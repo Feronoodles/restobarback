@@ -6,6 +6,8 @@ package com.example.demo.dao;
 
 import com.example.demo.entity.Platos;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
@@ -22,7 +24,7 @@ public interface IPlatosDao extends CrudRepository<Platos, Long>{
     @Procedure("buscar_platos")
     public List<Platos> findPlatosByPagination(@Param("index")int index,@Param("size")int size);
     
-    
+    public Page<Platos> findAll(Pageable paginacion);
     
     
 }
