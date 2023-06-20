@@ -34,6 +34,7 @@ public class Platos implements Serializable{
     
     private double precio;
     
+    private boolean activo;
     //    @ManyToMany
 //    @JoinTable(name="Platos_Pedidos",
 //            joinColumns = @JoinColumn(name="platosId", referencedColumnName = "platosId"),
@@ -45,6 +46,7 @@ public class Platos implements Serializable{
     public Platos(MPlatosRegistro platoRegistro){
         this.nombre = platoRegistro.nombre();
         this.precio = platoRegistro.precio();
+        this.activo = true;
     }
 
     public Long getPlatosId() {
@@ -70,7 +72,7 @@ public class Platos implements Serializable{
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-
+    
    // public Set<Pedidos> getPedidos() {
    //     return pedidos;
    // }
@@ -78,6 +80,14 @@ public class Platos implements Serializable{
   //  public void setPedidos(Set<Pedidos> pedidos) {
   //      this.pedidos = pedidos;
   //  }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 
 
     

@@ -6,9 +6,10 @@ import com.example.demo.entity.Bebidas;
 public record MBebidasVista(
         Long bebidaId,
         String nombre,
-        double precio
+        double precio,
+        boolean bebida
         ) {
     public MBebidasVista(Bebidas bebidas){
-        this(bebidas.getBebidaId(),bebidas.getNombre(),bebidas.getPrecio());
+        this(bebidas.getBebidaId(),bebidas.getNombre(),bebidas.getPrecio(),bebidas.isActivo());
     }
 }

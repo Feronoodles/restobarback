@@ -4,8 +4,12 @@
  */
 package com.example.demo.service;
 
+import com.example.demo.dao.IMesaDao;
 import com.example.demo.dao.IPedidosDao;
+import com.example.demo.entity.Mesa;
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.pedidos.MPedidoActualizar;
+import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleVista;
 import java.util.ArrayList;
@@ -26,10 +30,11 @@ public class IPedidosServiceImpl implements IPedidosService{
 
    
     private IPedidosDao pedao;
-    
-    public IPedidosServiceImpl(IPedidosDao pedao)
+    private IMesaDao mesaDao;
+    public IPedidosServiceImpl(IPedidosDao pedao,IMesaDao mesaDao)
     {
         this.pedao = pedao;
+        this.mesaDao = mesaDao;
     }
     
     @Override
@@ -39,8 +44,11 @@ public class IPedidosServiceImpl implements IPedidosService{
     }
 
     @Override
-    public void savePedidos(Pedidos pe) {
-        pedao.save(pe);
+    public void savePedidos(MPedidoRegistro pe) {
+        Mesa numeroMesa = mesaDao.findByNumero(pe.numeroMesa());
+        Pedidos pedido = new Pedidos(pe,numeroMesa);
+        
+        pedao.save(pedido);
     }
 
     @Override
@@ -57,6 +65,16 @@ public class IPedidosServiceImpl implements IPedidosService{
     public Page<Pedidos> findAll(Pageable paginacion) {
         
         return (Page<Pedidos>) pedao.findAll(paginacion);
+    }
+
+    @Override
+    @Transactional
+    public MPedidoVista actualizarPedido(MPedidoActualizar pedidoActualizar) {
+        Pedidos pedido = pedao.getReferenceById(pedidoActualizar.pedidoId());
+        Mesa mesa = mesaDao.findByNumero(pedidoActualizar.numeroMesa());
+        
+        pedido.actualizarPedidos(pedidoActualizar, mesa);
+        return new MPedidoVista(pedido);
     }
     
 }

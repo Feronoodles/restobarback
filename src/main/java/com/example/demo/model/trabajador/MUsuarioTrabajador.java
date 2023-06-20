@@ -18,7 +18,6 @@ public record MUsuarioTrabajador(
         
         String correo,
         String contraseña,
-        int activo,
         String token,
         String tokenCelular,
         Long tipoUsuarioId

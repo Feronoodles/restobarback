@@ -4,6 +4,8 @@
  */
 package com.example.demo.entity;
 
+import com.example.demo.model.pedidos.MPedidoActualizar;
+import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,6 +44,10 @@ public class Pedidos implements Serializable{
     
     private double gastoTotal;
     
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pedidoId")
+    private Mesa mesa;
+    
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "pedidosId",referencedColumnName = "pedidosId")
     private List<PedidoDetalle> pedidoDetalle = new ArrayList<>();
@@ -57,8 +63,24 @@ public class Pedidos implements Serializable{
         createAt = new Date();
     }
 
-
-
+    public Pedidos(){}
+    
+    public Pedidos(MPedidoRegistro pedidoRegistro,Mesa mesa)
+    {
+        this.usuarioId = pedidoRegistro.usuarioId();
+        this.gastoTotal = 0;
+        this.mesa = mesa;
+        
+    }
+    public void actualizarPedidos(MPedidoActualizar pedidoActualizar,Mesa mesa){
+        if(pedidoActualizar.usuarioId()!=null)
+            this.usuarioId = pedidoActualizar.usuarioId();
+        if(pedidoActualizar.gastoTotal()>0)
+            this.gastoTotal+=pedidoActualizar.gastoTotal();
+        if(pedidoActualizar.numeroMesa()>0)
+            this.mesa = mesa;
+            
+    }
     public Long getPedidosId() {
         return pedidosId;
     }
@@ -83,6 +105,14 @@ public class Pedidos implements Serializable{
         this.gastoTotal = gastoTotal;
     }
 
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Mesa mesa) {
+        this.mesa = mesa;
+    }
+    
     public Date getCreateAt() {
         return createAt;
     }

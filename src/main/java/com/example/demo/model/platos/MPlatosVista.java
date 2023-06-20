@@ -13,10 +13,11 @@ import com.example.demo.entity.Platos;
 public record MPlatosVista(
         Long platoId,
         String nombre,
-        double precio
+        double precio,
+        boolean activo
         ) {
     public MPlatosVista(Platos plato)
     {
-        this(plato.getPlatosId(),plato.getNombre(),plato.getPrecio());
+        this(plato.getPlatosId(),plato.getNombre(),plato.getPrecio(),plato.isActivo());
     }
 }

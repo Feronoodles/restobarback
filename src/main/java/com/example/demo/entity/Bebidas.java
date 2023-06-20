@@ -27,6 +27,8 @@ public class Bebidas implements Serializable{
     private String nombre;
     
     private double precio;
+    
+    private boolean activo;
 
     public Bebidas()
     {
@@ -36,6 +38,7 @@ public class Bebidas implements Serializable{
     {
         this.nombre = bebidaRegistro.nombre();
         this.precio = bebidaRegistro.precio();
+        this.activo = true;
     }
   
     public String getNombre() {
@@ -61,6 +64,14 @@ public class Bebidas implements Serializable{
 
     public void setBebidaId(Long id) {
         this.bebidaId = id;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
     
     private static final Long serialVersionUID = 1L;

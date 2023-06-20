@@ -7,6 +7,7 @@ package com.example.demo.dao;
 import com.example.demo.entity.Usuario;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author User
  */
-public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
+public interface IUsuarioDao extends JpaRepository<Usuario, Long>{
     
     public Usuario findByCorreo(String correo);
     

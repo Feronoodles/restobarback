@@ -5,6 +5,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.pedidos.MPedidoActualizar;
+import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleRegistro;
 import java.util.List;
@@ -21,7 +23,9 @@ public interface IPedidosService {
     
     public Page<Pedidos> findAll(Pageable paginacion);
     
-    public void savePedidos(Pedidos pe);
+    public void savePedidos(MPedidoRegistro pe);
+    
+    public MPedidoVista actualizarPedido(MPedidoActualizar pedidoActualizar);
     
     public List<Pedidos> getPedidosUsuarios(Long id);
     

@@ -4,11 +4,16 @@
  */
 package com.example.demo.model.pedidos;
 
+import com.example.demo.entity.Mesa;
 import com.example.demo.entity.PedidoDetalle;
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.mesa.MMesaVista;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleVista;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  *
@@ -20,14 +25,18 @@ public record MPedidoVista(
     Long usuarioId,
     
     double gastoTotal,
+    MMesaVista mesa
+    ,
     
-    List<PedidoDetalle> pedidoDetalle,
+    List<MPedidoDetalleVista> pedidoDetalle,
     
     Date createAt
         ) {
     public MPedidoVista(Pedidos pedido)
     {
-        this(pedido.getPedidosId(),pedido.getUsuarioId(),pedido.getGastoTotal(),pedido.getPedidoDetalle(),pedido.getCreateAt());
+        this(pedido.getPedidosId(),pedido.getUsuarioId(),pedido.getGastoTotal(), new MMesaVista(pedido.getMesa()),
+         pedido.getPedidoDetalle().stream().map(MPedidoDetalleVista::new).collect(Collectors.toList())
+        ,pedido.getCreateAt());
     }
     
 }

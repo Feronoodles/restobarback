@@ -40,8 +40,9 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     public void save(MUsuarioTrabajador muTrabajador) {
         Usuario usuario = new Usuario(muTrabajador);
         Trabajador trabajador = new Trabajador(muTrabajador, usuario);
-        usuarioDao.save(usuario);
         trabajadorDao.save(trabajador);
+        usuarioDao.save(usuario);
+        
     }
 
     @Override

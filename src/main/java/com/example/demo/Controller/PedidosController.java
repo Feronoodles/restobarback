@@ -5,6 +5,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.entity.Pedidos;
+import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
 import com.example.demo.service.IPedidosService;
 import java.util.List;
@@ -44,7 +45,7 @@ public class PedidosController {
 
     
     @PostMapping("/crear_pedidos")
-    public ResponseEntity<Void> agregarPedidos(@RequestBody Pedidos pedidos)
+    public ResponseEntity<Void> agregarPedidos(@RequestBody MPedidoRegistro pedidos)
     {
         pedidosService.savePedidos(pedidos);
         return new ResponseEntity<Void>(HttpStatus.CREATED);

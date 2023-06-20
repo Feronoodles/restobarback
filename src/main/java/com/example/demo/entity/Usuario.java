@@ -88,7 +88,7 @@ public class Usuario implements Serializable{
     {   
         this.correo = mucliente.correo();
         this.contraseña = mucliente.contraseña();
-        this.activo = mucliente.activo();
+        this.activo = 1;
         this.token = mucliente.token();
         this.tokenCelular = mucliente.tokenCelular();
         this.tipoUsuarioId = mucliente.tipoUsuarioId();
@@ -98,7 +98,7 @@ public class Usuario implements Serializable{
     {   
         this.correo = muTrabajador.correo();
         this.contraseña = muTrabajador.contraseña();
-        this.activo = muTrabajador.activo();
+        this.activo = 1;
         this.token = muTrabajador.token();
         this.tokenCelular = muTrabajador.tokenCelular();
         this.tipoUsuarioId = muTrabajador.tipoUsuarioId();
