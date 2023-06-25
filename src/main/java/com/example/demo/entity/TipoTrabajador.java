@@ -4,10 +4,12 @@
  */
 package com.example.demo.entity;
 
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorRegistro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +30,8 @@ public class TipoTrabajador implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipoTrabajadorId;
     
-    private String name;
+    @Column(nullable = false)
+    private String nombre;
     
         // relacion de 1 a n con pedidos
     @OneToMany(cascade = CascadeType.ALL)
@@ -36,7 +39,13 @@ public class TipoTrabajador implements Serializable{
     private List<Trabajador> trabajadores = new ArrayList<>();
     
     
-
+    public TipoTrabajador(){}
+    
+    public TipoTrabajador(MTipoTrabajadorRegistro tipoTrabajadorRegistro)
+    {
+        this.nombre = tipoTrabajadorRegistro.nombre();
+    }
+    
     public Long getTipoTrabajadorId() {
         return tipoTrabajadorId;
     }
@@ -45,21 +54,15 @@ public class TipoTrabajador implements Serializable{
         this.tipoTrabajadorId = tipoTrabajadorId;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public List<Trabajador> getTrabajadores() {
-        return trabajadores;
-    }
 
-    public void setTrabajadores(List<Trabajador> trabajador) {
-        this.trabajadores = trabajador;
-    }
     
     private static final Long serialVersionUID = 1L;
     

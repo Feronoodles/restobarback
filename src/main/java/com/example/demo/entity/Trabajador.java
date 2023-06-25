@@ -34,6 +34,7 @@ public class Trabajador implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trabajadorId;
     
+    @Column(nullable = false)
     private String nombre;
     
     // relacion de 1 a n con pedidos
@@ -41,17 +42,20 @@ public class Trabajador implements Serializable{
     //@JoinColumn(name = "id", referencedColumnName = "trabajadorId",unique = true)
     //private List<Usuario> usuario;
     
-    
+    @Column(nullable = false)
     private String direccion;
     
+    @Column(nullable = false)
     private Date fechaNacimiento;
 
+    @Column(nullable = false)
     private Date fechaInicioTrabajo;
     
+    @Column(nullable = false)
     private double salario;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuarioId", unique = true)
+    @JoinColumn(name = "usuarioId", unique = true,nullable = false)
     private Usuario usuario;
     
     @Column(name="tipoTrabajadorId",nullable = false)

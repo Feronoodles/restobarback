@@ -5,19 +5,23 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author User
  */
-public interface ITipoUsuarioDao extends CrudRepository<TipoUsuario, Long>{
+public interface ITipoUsuarioDao extends JpaRepository<TipoUsuario, Long>{
     
     public List<TipoUsuario> findByTipoUsuarioId(Long id);
     
-   
+   // @Query("select new com.example.demo.model.MTipoUsuarioVista(t.tipoUsuarioId,t.nombre) from Tipo_Usuario t")
+   // public List<MTipoUsuarioVista> findDetails();
     
     
 }

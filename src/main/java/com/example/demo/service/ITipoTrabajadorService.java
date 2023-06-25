@@ -5,6 +5,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TipoTrabajador;
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorRegistro;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface ITipoTrabajadorService {
     
     public List<TipoTrabajador> findAll();
     
+    public TipoTrabajador findByTipoTrabajadorId(Long tipoTrabajadorId);
     
-    
-    public void save(TipoTrabajador tipoTrabajador);
+    public TipoTrabajador save(MTipoTrabajadorRegistro tipoTrabajador);
 }

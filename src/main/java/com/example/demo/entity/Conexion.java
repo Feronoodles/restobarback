@@ -7,6 +7,7 @@ package com.example.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,8 +27,10 @@ public class Conexion implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long conexionId;
     
+    @Column(nullable = false)
     private Date fechaConexion;
     
+    @Column(nullable = false)
     private Long usuarioId;
 
     public Long getConexionId() {

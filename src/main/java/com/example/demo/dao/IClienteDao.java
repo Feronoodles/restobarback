@@ -8,13 +8,14 @@ import com.example.demo.entity.Cliente;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author User
  */
-public interface IClienteDao extends CrudRepository<Cliente, Long>{
+public interface IClienteDao extends JpaRepository<Cliente, Long>{
     
     public List<Cliente> findByClienteId(Long id);
     public Page<Cliente> findAll(Pageable pagination);

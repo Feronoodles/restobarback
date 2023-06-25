@@ -5,8 +5,12 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -14,9 +18,9 @@ import java.util.Optional;
  */
 public interface ITipoUsuarioService {
     
-    public List<TipoUsuario> findAll();
+    public Page<TipoUsuario> findAll(Pageable paginacion);
     
-    public void saveTipoUsuario(TipoUsuario tusuario);
+    public void saveTipoUsuario(MTipoUsuarioRegistro tusuario);
     
     public List<TipoUsuario> getTipoUsuarios(Long id);
     

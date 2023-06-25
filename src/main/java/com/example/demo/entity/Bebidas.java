@@ -6,6 +6,7 @@ package com.example.demo.entity;
 
 import com.example.demo.model.bebidas.MBebidasRegistro;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,10 +25,13 @@ public class Bebidas implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bebidaId;
 
+    @Column(nullable = false)
     private String nombre;
     
+    @Column(nullable = false)
     private double precio;
     
+    @Column(nullable = false)
     private boolean activo;
 
     public Bebidas()

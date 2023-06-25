@@ -40,12 +40,14 @@ public class Pedidos implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pedidosId;
     
+    @Column(nullable = false)
     private Long usuarioId;
     
+    @Column(nullable = false)
     private double gastoTotal;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedidoId")
+    @JoinColumn(name = "pedidoId",nullable = false)
     private Mesa mesa;
     
     @OneToMany(cascade = CascadeType.ALL)

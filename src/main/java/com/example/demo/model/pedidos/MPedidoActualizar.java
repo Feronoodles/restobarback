@@ -4,11 +4,14 @@
  */
 package com.example.demo.model.pedidos;
 
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * @author User
  */
 public record MPedidoActualizar(
+        @NotNull
         Long pedidoId,
         Long usuarioId,
         double gastoTotal,

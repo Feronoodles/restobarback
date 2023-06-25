@@ -42,13 +42,13 @@ public class Usuario implements Serializable{
    // @Column (unique=true,name="usuarioId")
    // private String usuarioId;
     
-    @Column(unique=true,length=60,name="correo")
+    @Column(unique=true,length=60,name="correo",nullable = false)
     private String correo;
     
-    @Column(length=20,name="contraseña")
+    @Column(length=20,name="contraseña",nullable = false)
     private String contraseña;
     
-    @Column(name="activo")
+    @Column(name="activo",nullable = false)
     private int activo;
     
     @Column(name="token")

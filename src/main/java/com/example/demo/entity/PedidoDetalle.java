@@ -7,10 +7,12 @@ package com.example.demo.entity;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleRegistro;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,7 +38,7 @@ public class PedidoDetalle implements Serializable{
     
     private int cantidadBebidas;
     
-    
+    @Column(nullable = false)
     private Long pedidosId;
     
     public PedidoDetalle(){

@@ -6,9 +6,13 @@ package com.example.demo.service;
 
 import com.example.demo.dao.ITipoUsuarioDao;
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +29,15 @@ public class ITipoUsuarioServiceImpl implements ITipoUsuarioService{
     
     @Override
     @Transactional(readOnly = true)
-    public List<TipoUsuario> findAll() {
-        return (List<TipoUsuario>)tipoUsuarioDao.findAll();
+    public Page<TipoUsuario> findAll( Pageable paginacion) {
+        return (Page<TipoUsuario>)tipoUsuarioDao.findAll(paginacion);
     }
 
     @Override
-    public void saveTipoUsuario(TipoUsuario tusuario) {
-        tipoUsuarioDao.save(tusuario);
+    public void saveTipoUsuario(MTipoUsuarioRegistro tusuario) {
+        TipoUsuario tipoUsuario = new TipoUsuario(tusuario);
+        
+        tipoUsuarioDao.save(tipoUsuario);
     }
 
     @Override

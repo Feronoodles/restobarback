@@ -4,12 +4,17 @@
  */
 package com.example.demo.model.platos;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * @author User
  */
 public record MPlatosRegistro(
+        @NotBlank
         String nombre,
+        @NotNull
         double precio
         ) {
     

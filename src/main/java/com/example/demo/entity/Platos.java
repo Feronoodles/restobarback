@@ -8,6 +8,7 @@ import com.example.demo.model.platos.MPlatosRegistro;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,10 +31,13 @@ public class Platos implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long platosId;
     
+    @Column(length = 50,nullable = false)
     private String nombre;
     
+    @Column(nullable = false)
     private double precio;
     
+    @Column(nullable = false)
     private boolean activo;
     //    @ManyToMany
 //    @JoinTable(name="Platos_Pedidos",

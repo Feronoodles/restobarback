@@ -5,9 +5,17 @@
 package com.example.demo.Controller;
 
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import com.example.demo.service.ITipoUsuarioService;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,28 +36,16 @@ public class TipoUsuarioController {
     private ITipoUsuarioService tipoUsuarioService;
     
     @GetMapping("/tipo_usuario")
-    public ResponseEntity<?> listaTipoUsuario()
+    public ResponseEntity<Page<MTipoUsuarioVista>> listaTipoUsuario(@PageableDefault(size = 10) Pageable paginacion)
     {
-        List<TipoUsuario> listaTipoUsuario = tipoUsuarioService.findAll();
+        Page<TipoUsuario> listaTipoUsuario = tipoUsuarioService.findAll(paginacion);
         
-        if(listaTipoUsuario!=null)
-        {
-            if(listaTipoUsuario.size()!=0)
-            {
-                return new ResponseEntity<>(listaTipoUsuario,HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }        
+        
+        return ResponseEntity.ok(listaTipoUsuario.map(MTipoUsuarioVista::new));
+        
     }
     @PostMapping("/crear_tipo_usuario")
-    public ResponseEntity<Void> agregarTipoUsuario(@RequestBody TipoUsuario tipousu)
+    public ResponseEntity<Void> agregarTipoUsuario(@RequestBody MTipoUsuarioRegistro tipousu)
     {
         tipoUsuarioService.saveTipoUsuario(tipousu);
         return new ResponseEntity<Void>(HttpStatus.CREATED);

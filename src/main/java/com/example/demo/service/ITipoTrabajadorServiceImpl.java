@@ -6,6 +6,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.ITipoTrabajadorDao;
 import com.example.demo.entity.TipoTrabajador;
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorRegistro;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,14 @@ public class ITipoTrabajadorServiceImpl implements ITipoTrabajadorService{
     }
 
     @Override
-    public void save(TipoTrabajador tipoTrabajador) {
-        tipoTrabajadorDao.save(tipoTrabajador);
+    public TipoTrabajador save(MTipoTrabajadorRegistro tipoTrabajadorRegistro) {
+        TipoTrabajador tipoTrabajador = new TipoTrabajador(tipoTrabajadorRegistro);
+        return tipoTrabajadorDao.save(tipoTrabajador);
+    }
+
+    @Override
+    public TipoTrabajador findByTipoTrabajadorId(Long tipoTrabajadorId) {
+        return tipoTrabajadorDao.getReferenceById(tipoTrabajadorId);
     }
     
 }

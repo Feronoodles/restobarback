@@ -6,16 +6,22 @@ package com.example.demo.Controller;
 
 import com.example.demo.entity.TipoTrabajador;
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorRegistro;
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorVista;
 import com.example.demo.service.ITipoTrabajadorService;
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -28,31 +34,31 @@ public class TipoTrabajadorController {
     private ITipoTrabajadorService tipoTrabajadorService;
     
     @GetMapping("/tipo_trabajador")
-    public ResponseEntity<?> listaTipoTrabajador()
+    public ResponseEntity<List<MTipoTrabajadorVista>> listaTipoTrabajador()
     {
         List<TipoTrabajador> listaTipoTrabajador = tipoTrabajadorService.findAll();
         
-        if(listaTipoTrabajador!=null)
-        {
-            if(listaTipoTrabajador.size()!=0)
-            {
-                return new ResponseEntity<>(listaTipoTrabajador,HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }        
+        return ResponseEntity.ok(listaTipoTrabajador.stream().map(MTipoTrabajadorVista::new).collect(Collectors.toList()));
+    }
+    
+    @GetMapping("/ver_tipo_trabajador/{tipoTrabajadorId}")
+    public ResponseEntity<MTipoTrabajadorVista> mostrarTipoTrabajador(@PathVariable Long tipoTrabajadorId)
+    {
+        TipoTrabajador tipoTrabajador = tipoTrabajadorService.findByTipoTrabajadorId(tipoTrabajadorId);
+        
+        MTipoTrabajadorVista mTipoTrabajadorVista = new MTipoTrabajadorVista(tipoTrabajador);
+        return ResponseEntity.ok(mTipoTrabajadorVista);
     }
     
     @PostMapping("/crear_tipo_trabajador")
-    public ResponseEntity<Void> crearTipoTrabajador(@RequestBody TipoTrabajador tipoTrabajador)
-    {
-        tipoTrabajadorService.save(tipoTrabajador);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<MTipoTrabajadorVista> crearTipoTrabajador(@RequestBody MTipoTrabajadorRegistro tipoTrabajadorRegistro,UriComponentsBuilder uriComponentsBuilder)
+    {   
+        TipoTrabajador tipoTrabajador = tipoTrabajadorService.save(tipoTrabajadorRegistro);
+
+        MTipoTrabajadorVista tipoTrabajadorVista = new MTipoTrabajadorVista(tipoTrabajador);
+        
+        URI url = uriComponentsBuilder.path("/api/ver_tipo_trabajador/{id}").buildAndExpand(tipoTrabajador.getTipoTrabajadorId()).toUri();
+        
+        return ResponseEntity.created(url).body(tipoTrabajadorVista);
     }
 }

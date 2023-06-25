@@ -5,6 +5,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.model.mesa.MMesaRegistro;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,10 +24,13 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mesaId;
     
+    @Column(nullable = false)
     private int numero;
     
+    @Column(nullable = false)
     private int sillas;
     
+    @Column(nullable = false)
     private boolean activo;
 
     public Mesa(){}

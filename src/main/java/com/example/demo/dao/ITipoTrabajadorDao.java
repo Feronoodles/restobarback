@@ -6,13 +6,14 @@ package com.example.demo.dao;
 
 import com.example.demo.entity.TipoTrabajador;
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author User
  */
-public interface ITipoTrabajadorDao extends CrudRepository<TipoTrabajador, Long>{
+public interface ITipoTrabajadorDao extends JpaRepository<TipoTrabajador, Long>{
     
     public List<TipoTrabajador> findByTipoTrabajadorId(Long id);
 }

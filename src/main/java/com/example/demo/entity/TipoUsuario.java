@@ -4,6 +4,7 @@
  */
 package com.example.demo.entity;
 
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class TipoUsuario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tipoUsuarioId;
     
+    @Column(nullable = false)
     private String nombre;
 
     
@@ -36,13 +38,13 @@ public class TipoUsuario implements Serializable{
     @JoinColumn(name = "tipoUsuarioId", referencedColumnName = "tipoUsuarioId")
     private List<Usuario> usuarios = new ArrayList<>();
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public TipoUsuario(){}
+    
+    public TipoUsuario(MTipoUsuarioRegistro tipoUsuarioRegistro)
+    {
+        this.nombre = tipoUsuarioRegistro.nombre();
     }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
+ 
     
     public Long getTipoUsuarioId() {
         return tipoUsuarioId;

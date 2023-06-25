@@ -4,12 +4,16 @@
  */
 package com.example.demo.model.mesa;
 
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * @author User
  */
 public record MMesaRegistro(
+        @NotNull
         int numeroMesa,
+        @NotNull
         int sillas
         ) {
 
