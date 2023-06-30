@@ -16,9 +16,9 @@ public record MUsuarioTrabajador(
         String nombre,
         @NotBlank
         String direccion,
-        @NotBlank
+        @NotNull
         Date fechaNacimiento,
-        @NotBlank
+        @NotNull
         Date fechaInicioTrabajo,
         @NotNull
         double salario,

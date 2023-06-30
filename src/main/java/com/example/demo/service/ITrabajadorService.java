@@ -20,6 +20,7 @@ public interface ITrabajadorService {
     
     public Page<Trabajador> findAll(Pageable paginacion);
     
-    public void save(MUsuarioTrabajador muTrabajador);
+    public Trabajador save(MUsuarioTrabajador muTrabajador);
     
+    public Trabajador buscarTrabajador(Long id);
 }

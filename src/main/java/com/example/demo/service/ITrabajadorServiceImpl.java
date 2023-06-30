@@ -37,11 +37,12 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     }
 
     @Override
-    public void save(MUsuarioTrabajador muTrabajador) {
+    public Trabajador save(MUsuarioTrabajador muTrabajador) {
         Usuario usuario = new Usuario(muTrabajador);
         Trabajador trabajador = new Trabajador(muTrabajador, usuario);
         trabajadorDao.save(trabajador);
         usuarioDao.save(usuario);
+        return trabajador;
         
     }
 
@@ -49,6 +50,11 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     public Page<Trabajador> findAll(Pageable paginacion) {
         
         return (Page<Trabajador>) trabajadorDao.findAll(paginacion);
+    }
+
+    @Override
+    public Trabajador buscarTrabajador(Long id) {
+        return trabajadorDao.getReferenceById(id);
     }
     
 }
