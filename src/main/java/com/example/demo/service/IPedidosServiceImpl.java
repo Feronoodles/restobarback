@@ -44,11 +44,11 @@ public class IPedidosServiceImpl implements IPedidosService{
     }
 
     @Override
-    public void savePedidos(MPedidoRegistro pe) {
+    public Pedidos savePedidos(MPedidoRegistro pe) {
         Mesa numeroMesa = mesaDao.findByNumero(pe.numeroMesa());
         Pedidos pedido = new Pedidos(pe,numeroMesa);
         
-        pedao.save(pedido);
+        return pedao.save(pedido);
     }
 
     @Override

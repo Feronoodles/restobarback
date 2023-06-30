@@ -47,7 +47,7 @@ public class Pedidos implements Serializable{
     private double gastoTotal;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pedidoId",nullable = false)
+    @JoinColumn(name = "mesaId",nullable = false)
     private Mesa mesa;
     
     @OneToMany(cascade = CascadeType.ALL)

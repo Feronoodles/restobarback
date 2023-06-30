@@ -48,9 +48,11 @@ public class IPedidosDetalleServiceImpl implements IPedidosDetalleService{
 
     @Override
     public void save(MPedidoDetalleRegistro pedidoDetalleRegistro) {
+        
         double gastoTotal = 0;
         Platos plato = platoDao.findByIdSQL(pedidoDetalleRegistro.platosId());
         Bebidas bebida = bebidasDao.getReferenceById(pedidoDetalleRegistro.bebidasId());
+        
         if(pedidoDetalleRegistro.cantidadPlatos()>0)
             gastoTotal += plato.getPrecio()*pedidoDetalleRegistro.cantidadPlatos();
         if(pedidoDetalleRegistro.cantidadBebidas()>0)

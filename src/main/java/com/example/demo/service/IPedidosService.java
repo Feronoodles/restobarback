@@ -23,7 +23,7 @@ public interface IPedidosService {
     
     public Page<Pedidos> findAll(Pageable paginacion);
     
-    public void savePedidos(MPedidoRegistro pe);
+    public Pedidos savePedidos(MPedidoRegistro pe);
     
     public MPedidoVista actualizarPedido(MPedidoActualizar pedidoActualizar);
     

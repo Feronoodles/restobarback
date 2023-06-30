@@ -8,7 +8,9 @@ import com.example.demo.entity.Pedidos;
 import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
 import com.example.demo.service.IPedidosService;
+import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +18,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -42,14 +46,27 @@ public class PedidosController {
         return ResponseEntity.ok(pedidosService.findAll(paginacion).map(MPedidoVista::new));
     }
     
-
+    @GetMapping("ver_pedidos/{idPedido}")
+    public ResponseEntity<MPedidoVista> mostrarPedido(@PathVariable Long idPedido)
+    {
+        Pedidos pedido = pedidosService.getPedidoBySQL(idPedido);
+        
+        MPedidoVista pedidoVista = new MPedidoVista(pedido);
+        
+        return ResponseEntity.ok(pedidoVista);
+    }
     
     @PostMapping("/crear_pedidos")
-    public ResponseEntity<Void> agregarPedidos(@RequestBody MPedidoRegistro pedidos)
+    public ResponseEntity<MPedidoVista> agregarPedidos(@RequestBody @Valid MPedidoRegistro pedidosRegistro, UriComponentsBuilder uriComponentsBuilder)
     {
-        pedidosService.savePedidos(pedidos);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        Pedidos pedido = pedidosService.savePedidos(pedidosRegistro);
+        MPedidoVista pedidoVista = new MPedidoVista(pedido);
+        
+        URI url = uriComponentsBuilder.path("/api/ver_pedidos/{idPedido}").buildAndExpand(pedido.getPedidosId()).toUri();
+        return ResponseEntity.created(url).body(pedidoVista);
     }
+    
+    
     
     @PostMapping("/pedidos_usuarios")
     public ResponseEntity<?> verPedidos(@RequestBody Pedidos pedidos)

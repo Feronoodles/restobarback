@@ -13,13 +13,13 @@ import javax.validation.constraints.NotNull;
  * @author User
  */
 public record MPedidoDetalleRegistro(
-       @NotNull
+       
        Long platosId,
-       @NotNull
+       
        int cantidadPlatos,
-       @NotNull
+       
        Long bebidasId,
-       @NotNull
+       
        int cantidadBebidas,
        @NotNull
        Long pedidoId
