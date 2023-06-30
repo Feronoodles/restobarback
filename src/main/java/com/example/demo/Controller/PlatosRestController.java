@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Platos;
 import com.example.demo.model.platos.MPlatosRegistro;
 import com.example.demo.model.platos.MPlatosVista;
+import java.net.URI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.util.UriComponentsBuilder;
+
 /**
  *
  * @author User
@@ -61,14 +64,25 @@ public class PlatosRestController {
         }
         return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     }
-    
+    @GetMapping("/ver_plato/{idPlato}")
+    public ResponseEntity<MPlatosVista> mostrarPlato(@PathVariable Long idPlato)
+    {
+        Platos plato = platoService.findPlatosByID(idPlato);
+        
+        MPlatosVista platoVista = new MPlatosVista(plato);
+        
+        return ResponseEntity.ok(platoVista);
+    }
     
     @PostMapping("/crear_plato")
-    public ResponseEntity<?> agregarPlato(@RequestBody MPlatosRegistro platoRegistro)
-    {
+    public ResponseEntity<MPlatosVista> agregarPlato(@RequestBody MPlatosRegistro platoRegistro,UriComponentsBuilder uriComponentsBuilder)
+    {   Platos plato = platoService.savePlatos(platoRegistro);
         
-        platoService.savePlatos(platoRegistro);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        MPlatosVista platoVista = new MPlatosVista(plato);
+        
+        URI url = uriComponentsBuilder.path("/api/ver_plato/{idPlato}").buildAndExpand(plato.getPlatosId()).toUri();
+
+        return ResponseEntity.created(url).body(platoVista);
     }
     
     

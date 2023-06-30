@@ -19,7 +19,7 @@ public interface IPlatosService {
     
     public Page<Platos> findAll(Pageable paginacion);
     
-    public void savePlatos(MPlatosRegistro platosRegistro);
+    public Platos savePlatos(MPlatosRegistro platosRegistro);
     
     public Platos findPlatosByID(Long platosId);
 }

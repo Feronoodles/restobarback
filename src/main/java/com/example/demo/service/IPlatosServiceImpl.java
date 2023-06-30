@@ -37,10 +37,10 @@ public class IPlatosServiceImpl implements IPlatosService{
 
     @Override
     @Transactional
-    public void savePlatos(MPlatosRegistro platosRegistro) {
+    public Platos savePlatos(MPlatosRegistro platosRegistro) {
         Platos plato = new Platos(platosRegistro);
         
-        platosDao.save(plato);
+        return platosDao.save(plato);
     }
 
     @Override
