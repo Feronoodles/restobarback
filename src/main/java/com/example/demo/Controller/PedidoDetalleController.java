@@ -8,6 +8,7 @@ import com.example.demo.entity.PedidoDetalle;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleRegistro;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleVista;
 import com.example.demo.service.IPedidosDetalleService;
+import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -41,7 +42,7 @@ public class PedidoDetalleController {
     }
     
     @PostMapping("/crear_pedido_detalle")
-    public ResponseEntity<Void> crearPedidoDetalle(@RequestBody MPedidoDetalleRegistro pedidoDetalleRegistro)
+    public ResponseEntity<Void> crearPedidoDetalle(@RequestBody @Valid MPedidoDetalleRegistro pedidoDetalleRegistro)
     {
         System.out.println("ver "+pedidoDetalleRegistro);
         pedidoDetalleService.save(pedidoDetalleRegistro);

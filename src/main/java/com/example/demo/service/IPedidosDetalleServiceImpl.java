@@ -50,22 +50,29 @@ public class IPedidosDetalleServiceImpl implements IPedidosDetalleService{
     public void save(MPedidoDetalleRegistro pedidoDetalleRegistro) {
         
         double gastoTotal = 0;
+       
         Platos plato = platoDao.findByIdSQL(pedidoDetalleRegistro.platosId());
         Bebidas bebida = bebidasDao.getReferenceById(pedidoDetalleRegistro.bebidasId());
         
-        if(pedidoDetalleRegistro.cantidadPlatos()>0)
-            gastoTotal += plato.getPrecio()*pedidoDetalleRegistro.cantidadPlatos();
-        if(pedidoDetalleRegistro.cantidadBebidas()>0)
-            gastoTotal += bebida.getPrecio() * pedidoDetalleRegistro.cantidadBebidas();
+        System.out.println("platos "+plato);
+        System.out.println("bebidas "+bebida);
+        if(plato != null && bebida !=null)
+        {
+            if(pedidoDetalleRegistro.cantidadPlatos()>0  )
+                gastoTotal += plato.getPrecio()*pedidoDetalleRegistro.cantidadPlatos();
+            if(pedidoDetalleRegistro.cantidadBebidas()>0 )
+                gastoTotal += bebida.getPrecio() * pedidoDetalleRegistro.cantidadBebidas();
+        }
+        
         
         MPedidoActualizar pedidoActualizar = new MPedidoActualizar(pedidoDetalleRegistro.pedidoId(),null,gastoTotal,-1);
-        
-        
         
         
         PedidoDetalle pedidoDetalle = new PedidoDetalle(pedidoDetalleRegistro,plato,bebida);
         pedidoService.actualizarPedido(pedidoActualizar);
         pedidoDetalleDao.save(pedidoDetalle);
+        
+        
         
     }
     
