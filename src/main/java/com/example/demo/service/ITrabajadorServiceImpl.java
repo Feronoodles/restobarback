@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,10 +26,12 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     
     private ITrabajadorDao trabajadorDao;
     private IUsuarioDao usuarioDao;
-    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao)
+    private BCryptPasswordEncoder passwordEncoder;
+    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder)
     {
         this.trabajadorDao = trabajadorDao;
         this.usuarioDao = usuarioDao;
+        this.passwordEncoder = passwordEncoder;
     }
     
     @Override
@@ -38,7 +41,7 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
 
     @Override
     public Trabajador save(MUsuarioTrabajador muTrabajador) {
-        Usuario usuario = new Usuario(muTrabajador);
+        Usuario usuario = new Usuario(muTrabajador, passwordEncoder.encode(muTrabajador.contraseña()));
         Trabajador trabajador = new Trabajador(muTrabajador, usuario);
         trabajadorDao.save(trabajador);
         usuarioDao.save(usuario);

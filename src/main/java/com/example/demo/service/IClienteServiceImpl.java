@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,11 +26,13 @@ public class IClienteServiceImpl implements IClienteService{
     
     private IClienteDao clienteDao;
     private IUsuarioDao usuarioDao;
+    private BCryptPasswordEncoder passwordEncoder;
     
-    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao)
+    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder)
     {
         this.clienteDao = clienteDao;
         this.usuarioDao = usuarioDao;
+        this.passwordEncoder = passwordEncoder;
     }
     
     @Override
@@ -41,7 +44,7 @@ public class IClienteServiceImpl implements IClienteService{
     @Override
     public void save(MUsuarioCliente mucliente) {
         
-        Usuario usuario = new Usuario(mucliente);
+        Usuario usuario = new Usuario(mucliente, passwordEncoder.encode(mucliente.contraseña()));
         Cliente cliente = new Cliente(mucliente);
         usuarioDao.save(usuario);
         cliente.setUsuario(usuario);

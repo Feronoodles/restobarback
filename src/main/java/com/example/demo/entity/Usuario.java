@@ -88,20 +88,20 @@ public class Usuario implements UserDetails{
     @JoinColumn(name = "usuarioId",referencedColumnName = "id")
     private List<Conexion> conexion = new ArrayList<>();
 
-    public Usuario(MUsuarioCliente mucliente)
+    public Usuario(MUsuarioCliente mucliente,String passwordEnconde)
     {   
         this.correo = mucliente.correo();
-        this.contraseña = mucliente.contraseña();
+        this.contraseña = passwordEnconde;
         this.activo = 1;
         this.token = mucliente.token();
         this.tokenCelular = mucliente.tokenCelular();
         this.tipoUsuarioId = mucliente.tipoUsuarioId();
     }
     
-    public Usuario(MUsuarioTrabajador muTrabajador)
+    public Usuario(MUsuarioTrabajador muTrabajador,String passwordEnconde)
     {   
         this.correo = muTrabajador.correo();
-        this.contraseña = muTrabajador.contraseña();
+        this.contraseña = passwordEnconde;
         this.activo = 1;
         this.token = muTrabajador.token();
         this.tokenCelular = muTrabajador.tokenCelular();
