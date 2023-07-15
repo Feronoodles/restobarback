@@ -46,6 +46,13 @@ public class SecurityConfigurations {
                 .permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/crear_tipo_trabajador"))
                 .permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
+                                .permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"))
+                        .permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html"))
+                                .permitAll()
+
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -54,6 +61,14 @@ public class SecurityConfigurations {
                 
                 .build();
     }
+
+    private static final String[] AUTH_WHITELIST = {
+            "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
     
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception
