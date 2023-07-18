@@ -8,6 +8,7 @@ import com.example.demo.entity.Bebidas;
 import com.example.demo.model.bebidas.MBebidasRegistro;
 import com.example.demo.model.bebidas.MBebidasVista;
 import com.example.demo.service.IBebidasService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class BebidasController {
     
     private IBebidasService bebidasServices;

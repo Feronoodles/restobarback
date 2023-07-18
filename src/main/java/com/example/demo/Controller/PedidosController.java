@@ -11,6 +11,8 @@ import com.example.demo.service.IPedidosService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class PedidosController {
     
   

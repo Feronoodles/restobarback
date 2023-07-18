@@ -12,6 +12,8 @@ import com.example.demo.service.ITrabajadorService;
 import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,11 +45,13 @@ public class TrabajadorController {
     }
     
      @GetMapping("/ver_trabajadores")
+     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<MTrabajadorVista>> verTrabajadores(@PageableDefault( size = 10 )Pageable paginacion)
     {
         return ResponseEntity.ok(trabajadorService.findAll(paginacion).map(MTrabajadorVista::new));
     }
     @GetMapping("/ver_trabajador/{idTrabajador}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<MTrabajadorVista> verTrabajdor(@PathVariable Long idTrabajador)
     {
         Trabajador trabajador = trabajadorService.buscarTrabajador(idTrabajador);

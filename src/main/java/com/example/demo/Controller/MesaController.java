@@ -9,6 +9,8 @@ import com.example.demo.model.mesa.MMesaRegistro;
 import com.example.demo.model.mesa.MMesaVista;
 import com.example.demo.service.IMesaService;
 import java.net.URI;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class MesaController {
     
     private IMesaService mesaService;

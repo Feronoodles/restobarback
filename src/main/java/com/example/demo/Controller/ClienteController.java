@@ -10,6 +10,8 @@ import com.example.demo.model.cliente.MClienteVista;
 import com.example.demo.model.cliente.MUsuarioCliente;
 import com.example.demo.service.IClienteService;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  *
@@ -39,13 +43,14 @@ public class ClienteController {
     }
     
     @GetMapping("/ver_clientes")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<MClienteVista>> verClientes(@PageableDefault( size = 10 )Pageable paginacion)
     {
         return ResponseEntity.ok(clienteService.findAll(paginacion).map(MClienteVista::new));
     }
     
     @PostMapping("/crear_cliente")
-    public ResponseEntity<Void> crearCliente(@RequestBody MUsuarioCliente ucliente)
+    public ResponseEntity<Void> crearCliente(@RequestBody @Valid MUsuarioCliente ucliente)
     {
         
         clienteService.save(ucliente);

@@ -1,10 +1,12 @@
 package com.example.demo;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +26,8 @@ public class RestobarApplication {
 	@Bean
 	public OpenAPI myOpenAPI() {
 		Contact contact = new Contact();
-		contact.setEmail("tericcabrel@yahoo.com");
-		contact.setName("Eric Cabrel TIOGO");
+		contact.setEmail("ferourlich@gmail.com");
+		contact.setName("Fernando");
 		contact.setUrl("https://my-awesome-api.com");
 
 		Server localServer = new Server();
@@ -50,6 +52,9 @@ public class RestobarApplication {
 
 		return new OpenAPI()
 				.info(info)
-				.servers(List.of(localServer, productionServer));
+				.servers(List.of(localServer, productionServer))
+				.components(new Components()
+						.addSecuritySchemes("bearer-key",
+								new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
 	}
 }

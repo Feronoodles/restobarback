@@ -9,6 +9,8 @@ import com.example.demo.model.pedidos_detalle.MPedidoDetalleRegistro;
 import com.example.demo.model.pedidos_detalle.MPedidoDetalleVista;
 import com.example.demo.service.IPedidosDetalleService;
 import javax.validation.Valid;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class PedidoDetalleController {
     
     private IPedidosDetalleService pedidoDetalleService;

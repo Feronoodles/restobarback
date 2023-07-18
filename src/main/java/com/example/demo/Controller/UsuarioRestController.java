@@ -10,6 +10,8 @@ import com.example.demo.model.MUsuario;
 import com.example.demo.service.IUsuarioService;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioRestController {
     
     private IUsuarioService usuarioService;
@@ -38,24 +41,7 @@ public class UsuarioRestController {
       this.usuarioService = usuarioService;
   }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario usuario)
-    {
-        Usuario usuariodb = usuarioService.checkUsuarioLogin(usuario);
-        if(usuariodb!=null)
-        {
-            //Lista por que en el mapper se creo una lista 
-            List<Usuario> usuarios = new ArrayList<>();
-            usuarios.add(usuariodb);
-            List<MUsuario> musuarios = new ArrayList<>();
-            musuarios = Mapper.convertirLista(usuarios);
-                    
-            return new ResponseEntity<>(musuarios,HttpStatus.OK);
-        }else
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
     
 
      @PutMapping("/update_sql")
