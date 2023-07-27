@@ -27,6 +27,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.example.demo.model.usuario.MUsuarioActualizar;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -106,6 +108,19 @@ public class Usuario implements UserDetails{
         this.token = muTrabajador.token();
         this.tokenCelular = muTrabajador.tokenCelular();
         this.tipoUsuarioId = muTrabajador.tipoUsuarioId();
+    }
+    public void actualizarUsuario(MUsuarioActualizar mUsuarioActualizar)
+    {
+        if(mUsuarioActualizar.contraseña()!=null)
+            this.contraseña=mUsuarioActualizar.contraseña();
+        if(mUsuarioActualizar.correo()!=null)
+            this.correo = mUsuarioActualizar.correo();
+        if(mUsuarioActualizar.activo() >0)
+            this.activo = mUsuarioActualizar.activo();
+        if(mUsuarioActualizar.token() != null)
+            this.token = mUsuarioActualizar.token();
+        if(mUsuarioActualizar.tokenCelular() != null)
+            this.tokenCelular = mUsuarioActualizar.tokenCelular();
     }
 
     public List<Conexion> getConexion() {

@@ -6,9 +6,13 @@ package com.example.demo.Controller;
 
 import com.example.demo.entity.Usuario;
 import com.example.demo.infra.security.DatosJWTToken;
+import com.example.demo.infra.security.DecodeToken;
 import com.example.demo.infra.security.TokenService;
 import com.example.demo.model.usuario.DatosAutenticacionUsuario;
 import javax.validation.Valid;
+
+import com.example.demo.model.usuario.MUsuarioActualizar;
+import com.example.demo.service.IUsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Base64;
+
 
 @RestController
 @RequestMapping("/login")
@@ -25,11 +31,16 @@ public class AutenticationController {
     public AuthenticationManager authenticationManager;
     private TokenService tokenService;
 
+    private IUsuarioService usuarioService;
+    private DecodeToken decodeToken;
 
-    public AutenticationController(AuthenticationManager authenticationManager,TokenService tokenService)
+
+    public AutenticationController(AuthenticationManager authenticationManager,TokenService tokenService,IUsuarioService usuarioService,DecodeToken decodeToken)
     {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.usuarioService = usuarioService;
+        this.decodeToken = decodeToken;
     }
 
     @PostMapping
@@ -41,6 +52,13 @@ public class AutenticationController {
 
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
         var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+
+        String usuarioId = decodeToken.decodeToken(JWTtoken)[0];
+
+        Usuario usuario = usuarioService.findById(Long.parseLong(usuarioId));
+
+        MUsuarioActualizar mUsuarioActualizar = new MUsuarioActualizar(usuario.getid(),null,null,-1,JWTtoken,null);
+        this.usuarioService.actualizarUsuario(mUsuarioActualizar);
         return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
 
     }

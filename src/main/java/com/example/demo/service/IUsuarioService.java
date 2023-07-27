@@ -5,6 +5,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Usuario;
+import com.example.demo.model.usuario.MUsuarioActualizar;
+import com.example.demo.model.usuario.MUsuarioVista;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,19 +20,9 @@ public interface IUsuarioService {
     
     public void save(Usuario usuario);
     
-    public Usuario findUsuario(Usuario usuario);
-    
-    public Usuario checkUsuarioLogin(Usuario usuario);
-    
-    public void deleteUsuario(Usuario usuario);
-    
     public Usuario updateUsuario(Usuario usuario);
-    
-    public Optional<Usuario> findUsuarioById(Long id);
-    
-    public void deleteUsuario(Long id);
-    
-    public void deleteAllUsuarios();
+
+    public MUsuarioVista actualizarUsuario(MUsuarioActualizar usuario);
 
     public Usuario findById(Long id);
     

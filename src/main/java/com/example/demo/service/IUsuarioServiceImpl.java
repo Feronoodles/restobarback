@@ -8,6 +8,9 @@ import com.example.demo.dao.IUsuarioDao;
 import com.example.demo.entity.Usuario;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.demo.model.usuario.MUsuarioActualizar;
+import com.example.demo.model.usuario.MUsuarioVista;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,19 +37,6 @@ public class IUsuarioServiceImpl implements IUsuarioService{
         
         return (List<Usuario>) usuariodao.findAll();
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Usuario findUsuario(Usuario usuario) {
-        return (Usuario) usuariodao.findByCorreo(usuario.getCorreo());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Usuario checkUsuarioLogin(Usuario usuario) {
-        return (Usuario) usuariodao.findByCorreoAndContraseña(usuario.getCorreo(), usuario.getContraseña());
-    }
-
  
 
     @Override
@@ -56,13 +46,15 @@ public class IUsuarioServiceImpl implements IUsuarioService{
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<Usuario> findUsuarioById(Long id) {
-       
-       return (Optional<Usuario>) usuariodao.findById(id);
+    @Transactional
+    public MUsuarioVista actualizarUsuario(MUsuarioActualizar actualizarusuario) {
+        Usuario usuario = usuariodao.getReferenceById(actualizarusuario.usuarioId());
+
+        usuario.actualizarUsuario(actualizarusuario);
+
+        return new MUsuarioVista(usuario);
     }
 
- 
 
     @Override
     @Transactional(readOnly = true)
@@ -86,20 +78,7 @@ public class IUsuarioServiceImpl implements IUsuarioService{
 
    
 
-    @Override
-    public void deleteUsuario(Usuario usuario) {
-        usuariodao.delete(usuario);
-    }
 
-    @Override
-    public void deleteUsuario(Long id) {
-        usuariodao.deleteById(id);
-    }
-
-    @Override
-    public void deleteAllUsuarios() {
-        usuariodao.deleteAll();
-    }
     
     
 }
