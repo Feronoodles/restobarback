@@ -22,5 +22,5 @@ public interface ITrabajadorService {
     
     public Trabajador save(MUsuarioTrabajador muTrabajador);
     
-    public Trabajador buscarTrabajador(Long id);
+    public Trabajador buscarTrabajador(String encoding);
 }

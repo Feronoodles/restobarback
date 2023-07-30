@@ -8,6 +8,7 @@ import com.example.demo.dao.ITrabajadorDao;
 import com.example.demo.dao.IUsuarioDao;
 import com.example.demo.entity.Trabajador;
 import com.example.demo.entity.Usuario;
+import com.example.demo.infra.security.DecodeToken;
 import com.example.demo.model.trabajador.MUsuarioTrabajador;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,13 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     private ITrabajadorDao trabajadorDao;
     private IUsuarioDao usuarioDao;
     private BCryptPasswordEncoder passwordEncoder;
-    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder)
+    private DecodeToken decodeToken;
+    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken)
     {
         this.trabajadorDao = trabajadorDao;
         this.usuarioDao = usuarioDao;
         this.passwordEncoder = passwordEncoder;
+        this.decodeToken = decodeToken;
     }
     
     @Override
@@ -56,8 +59,11 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     }
 
     @Override
-    public Trabajador buscarTrabajador(Long id) {
-        return trabajadorDao.getReferenceById(id);
+    public Trabajador buscarTrabajador(String encoding) {
+        String buscarId = encoding.replace("Bearer ","");
+        Long usuarioId = Long.parseLong(decodeToken.decodeToken(buscarId)[0]);
+
+        return trabajadorDao.findByIdSQL(usuarioId);
     }
     
 }

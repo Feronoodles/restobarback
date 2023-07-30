@@ -53,6 +53,8 @@ public class AutenticationController {
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
         var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
 
+
+
         String usuarioId = decodeToken.decodeToken(JWTtoken)[0];
 
         Usuario usuario = usuarioService.findById(Long.parseLong(usuarioId));
