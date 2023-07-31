@@ -33,7 +33,7 @@ public class Cliente implements Serializable{
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuarioId",unique = true,nullable = false)
-    private Usuario usuarios;
+    private Usuario usuario;
     
     @Column(nullable = false)
     private String name;
@@ -63,11 +63,11 @@ public class Cliente implements Serializable{
         this.clienteId = clienteId;
     }
     public Usuario getUsuario() {
-        return usuarios;
+        return usuario;
     }
     public void setUsuario(Usuario usuarios)
     {
-        this.usuarios = usuarios;
+        this.usuario = usuarios;
     }
 
 

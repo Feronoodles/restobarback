@@ -70,27 +70,6 @@ public class PedidosController {
     }
     
     
-    
-    @PostMapping("/pedidos_usuarios")
-    public ResponseEntity<?> verPedidos(@RequestBody Pedidos pedidos)
-    {
-        List<Pedidos> listaPedidos = pedidosService.getPedidosUsuarios(pedidos.getUsuarioId());
-        
-        if(listaPedidos!=null)
-        {
-            if(listaPedidos.size()!=0)
-            {
-                return new ResponseEntity<>(listaPedidos,HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }    
-    }
+
     
 }

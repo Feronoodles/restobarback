@@ -8,6 +8,7 @@ import com.example.demo.dao.IClienteDao;
 import com.example.demo.dao.IUsuarioDao;
 import com.example.demo.entity.Cliente;
 import com.example.demo.entity.Usuario;
+import com.example.demo.infra.security.DecodeToken;
 import com.example.demo.model.cliente.MUsuarioCliente;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,14 @@ public class IClienteServiceImpl implements IClienteService{
     private IClienteDao clienteDao;
     private IUsuarioDao usuarioDao;
     private BCryptPasswordEncoder passwordEncoder;
+    private DecodeToken decodeToken;
     
-    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder)
+    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken)
     {
         this.clienteDao = clienteDao;
         this.usuarioDao = usuarioDao;
         this.passwordEncoder = passwordEncoder;
+        this.decodeToken = decodeToken;
     }
     
     @Override
@@ -49,6 +52,17 @@ public class IClienteServiceImpl implements IClienteService{
         usuarioDao.save(usuario);
         cliente.setUsuario(usuario);
         clienteDao.save(cliente);
+    }
+
+    @Override
+    public Cliente buscarCliente(String encode) {
+        Long usuarioId = Long.parseLong(decodeToken.decodeToken(encode)[0]);
+        Usuario usuario = usuarioDao.getReferenceById(usuarioId);
+        Cliente cliente = clienteDao.findByUsuario(usuario);
+        //Cliente cliente = clienteDao.findByIdSQL(usuarioId);
+
+
+        return cliente;
     }
 
     @Override

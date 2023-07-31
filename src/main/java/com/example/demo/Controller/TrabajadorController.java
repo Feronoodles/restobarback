@@ -51,9 +51,8 @@ public class TrabajadorController {
     }
     @GetMapping("/ver_trabajador")
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<MTrabajadorVista> verTrabajdor(@RequestHeader("Authorization") String encoding)
+    public ResponseEntity<MTrabajadorVista> verTrabajador(@RequestHeader("Authorization") String encoding)
     {
-
 
         Trabajador trabajador = trabajadorService.buscarTrabajador(encoding);
         MTrabajadorVista vistaTrabajador = new MTrabajadorVista(trabajador);

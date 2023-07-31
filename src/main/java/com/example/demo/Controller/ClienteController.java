@@ -18,11 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -55,6 +51,15 @@ public class ClienteController {
         
         clienteService.save(ucliente);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/ver_cliente")
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<MClienteVista> verCliente(@RequestHeader("Authorization") String encoding)
+    {
+        Cliente cliente = clienteService.buscarCliente(encoding);
+        MClienteVista mClienteVista = new MClienteVista(cliente);
+        return ResponseEntity.ok(mClienteVista);
     }
     
 }
