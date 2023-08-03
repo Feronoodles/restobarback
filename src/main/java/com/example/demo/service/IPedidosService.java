@@ -27,7 +27,9 @@ public interface IPedidosService {
     
     public MPedidoVista actualizarPedido(MPedidoActualizar pedidoActualizar);
     
-    public List<Pedidos> getPedidosUsuarios(Long id);
+    public Page<Pedidos> getPedidosUsuarios(Pageable paginacion,String encode);
     
     public Pedidos getPedidoBySQL(Long pedidosId);
+
+
 }

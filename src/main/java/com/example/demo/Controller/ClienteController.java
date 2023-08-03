@@ -55,7 +55,7 @@ public class ClienteController {
 
     @GetMapping("/ver_cliente")
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<MClienteVista> verCliente(@RequestHeader("Authorization") String encoding)
+    public ResponseEntity<MClienteVista> verCliente(@RequestHeader(value = "Authorization",required = false) String encoding)
     {
         Cliente cliente = clienteService.buscarCliente(encoding);
         MClienteVista mClienteVista = new MClienteVista(cliente);

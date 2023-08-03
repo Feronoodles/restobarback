@@ -19,7 +19,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface IPedidosDao extends JpaRepository<Pedidos, Long>{
     public Page<Pedidos> findAll(Pageable paginacion);
     
-    public List<Pedidos> findByUsuarioId(Long id);
+    public Page<Pedidos> findByUsuarioId(Pageable pagination,Long id);
     
     @Query(value = "select p from Pedidos p where p.pedidosId=?1")
     public Pedidos findPedidoBySQL(Long pedidosId);

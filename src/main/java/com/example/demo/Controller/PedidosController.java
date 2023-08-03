@@ -17,14 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -38,10 +34,11 @@ public class PedidosController {
     
   
     private IPedidosService pedidosService;
-    
+
     public PedidosController( IPedidosService pedidosService)
     {
         this.pedidosService = pedidosService;
+
     }
     @GetMapping("/ver_pedidos")
     public ResponseEntity<Page<MPedidoVista>> mostrarPedidos(@PageableDefault(size = 10) Pageable paginacion)
@@ -49,14 +46,11 @@ public class PedidosController {
         return ResponseEntity.ok(pedidosService.findAll(paginacion).map(MPedidoVista::new));
     }
     
-    @GetMapping("ver_pedidos/{idPedido}")
-    public ResponseEntity<MPedidoVista> mostrarPedido(@PathVariable Long idPedido)
+    @GetMapping("ver_pedidos_usuarios")
+    public ResponseEntity<Page<MPedidoVista>> mostrarPedido(@PageableDefault(size = 10) Pageable paginacion,@RequestHeader(value = "Authorization",required = false) String encoding)
     {
-        Pedidos pedido = pedidosService.getPedidoBySQL(idPedido);
-        
-        MPedidoVista pedidoVista = new MPedidoVista(pedido);
-        
-        return ResponseEntity.ok(pedidoVista);
+
+        return ResponseEntity.ok(pedidosService.getPedidosUsuarios(paginacion,encoding).map(MPedidoVista::new));
     }
     
     @PostMapping("/crear_pedidos")
@@ -68,8 +62,5 @@ public class PedidosController {
         URI url = uriComponentsBuilder.path("/api/ver_pedidos/{idPedido}").buildAndExpand(pedido.getPedidosId()).toUri();
         return ResponseEntity.created(url).body(pedidoVista);
     }
-    
-    
-
     
 }

@@ -8,6 +8,7 @@ import com.example.demo.dao.IMesaDao;
 import com.example.demo.dao.IPedidosDao;
 import com.example.demo.entity.Mesa;
 import com.example.demo.entity.Pedidos;
+import com.example.demo.infra.security.DecodeToken;
 import com.example.demo.model.pedidos.MPedidoActualizar;
 import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
@@ -31,10 +32,12 @@ public class IPedidosServiceImpl implements IPedidosService{
    
     private IPedidosDao pedao;
     private IMesaDao mesaDao;
-    public IPedidosServiceImpl(IPedidosDao pedao,IMesaDao mesaDao)
+    private DecodeToken decodeToken;
+    public IPedidosServiceImpl(IPedidosDao pedao,IMesaDao mesaDao,DecodeToken decodeToken)
     {
         this.pedao = pedao;
         this.mesaDao = mesaDao;
+        this.decodeToken = decodeToken;
     }
     
     @Override
@@ -52,8 +55,9 @@ public class IPedidosServiceImpl implements IPedidosService{
     }
 
     @Override
-    public List<Pedidos> getPedidosUsuarios(Long id) {
-        return (List<Pedidos>) pedao.findByUsuarioId(id);
+    public Page<Pedidos> getPedidosUsuarios(Pageable paginacion,String encode) {
+        Long usuarioId = Long.parseLong(decodeToken.decodeToken(encode)[0]);
+        return (Page<Pedidos>) pedao.findByUsuarioId(paginacion,usuarioId);
     }
 
     @Override
