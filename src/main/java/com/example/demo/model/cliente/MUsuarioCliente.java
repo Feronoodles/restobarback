@@ -4,6 +4,7 @@
  */
 package com.example.demo.model.cliente;
 
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Usuario;
 import com.example.demo.entity.Cliente;
 import java.util.Date;
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public record MUsuarioCliente(
         @NotBlank
         String direccion,
-        @NotBlank
+        @NotNull
          Date fechaNacimiento,
         @NotBlank 
         String name,
@@ -29,9 +30,8 @@ public record MUsuarioCliente(
         String contraseña,
         @NotBlank 
         String token,
-        String tokenCelular,
-        @NotNull 
-        Long tipoUsuarioId) {
+        String tokenCelular
+     ) {
         
 
         

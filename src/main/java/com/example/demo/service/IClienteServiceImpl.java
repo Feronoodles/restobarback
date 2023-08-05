@@ -5,8 +5,10 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.IClienteDao;
+import com.example.demo.dao.ITipoUsuarioDao;
 import com.example.demo.dao.IUsuarioDao;
 import com.example.demo.entity.Cliente;
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Usuario;
 import com.example.demo.infra.security.DecodeToken;
 import com.example.demo.model.cliente.MUsuarioCliente;
@@ -27,15 +29,18 @@ public class IClienteServiceImpl implements IClienteService{
     
     private IClienteDao clienteDao;
     private IUsuarioDao usuarioDao;
+    private ITipoUsuarioDao tipoUsuarioDao;
     private BCryptPasswordEncoder passwordEncoder;
     private DecodeToken decodeToken;
     
-    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken)
+    public IClienteServiceImpl(IClienteDao clienteDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken
+    ,ITipoUsuarioDao tipoUsuarioDao)
     {
         this.clienteDao = clienteDao;
         this.usuarioDao = usuarioDao;
         this.passwordEncoder = passwordEncoder;
         this.decodeToken = decodeToken;
+        this.tipoUsuarioDao = tipoUsuarioDao;
     }
     
     @Override
@@ -46,8 +51,8 @@ public class IClienteServiceImpl implements IClienteService{
 
     @Override
     public void save(MUsuarioCliente mucliente) {
-        
-        Usuario usuario = new Usuario(mucliente, passwordEncoder.encode(mucliente.contraseña()));
+        TipoUsuario tipoUsuario = tipoUsuarioDao.getReferenceById(2l);
+        Usuario usuario = new Usuario(mucliente,tipoUsuario, passwordEncoder.encode(mucliente.contraseña()));
         Cliente cliente = new Cliente(mucliente);
         usuarioDao.save(usuario);
         cliente.setUsuario(usuario);

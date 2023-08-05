@@ -6,27 +6,15 @@ package com.example.demo.entity;
 
 
 import com.example.demo.model.cliente.MUsuarioCliente;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import com.example.demo.model.trabajador.MUsuarioTrabajador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import com.example.demo.model.usuario.MUsuarioActualizar;
 import org.springframework.security.core.GrantedAuthority;
@@ -64,8 +52,9 @@ public class Usuario implements UserDetails{
     private String tokenCelular;
     
 
-    @Column(name="tipoUsuarioId",nullable = false)
-    private Long tipoUsuarioId;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name="tipoUsuarioId",nullable = false)
+    private TipoUsuario tipoUsuario;
     
 
     
@@ -90,24 +79,29 @@ public class Usuario implements UserDetails{
     @JoinColumn(name = "usuarioId",referencedColumnName = "id")
     private List<Conexion> conexion = new ArrayList<>();
 
-    public Usuario(MUsuarioCliente mucliente,String passwordEnconde)
+    public Usuario()
+    {
+
+    }
+    public Usuario(MUsuarioCliente mucliente,TipoUsuario tipoUsuarioCliente,String passwordEnconde)
     {   
         this.correo = mucliente.correo();
         this.contraseña = passwordEnconde;
         this.activo = 1;
         this.token = mucliente.token();
         this.tokenCelular = mucliente.tokenCelular();
-        this.tipoUsuarioId = mucliente.tipoUsuarioId();
+
+        this.tipoUsuario = tipoUsuarioCliente;
     }
     
-    public Usuario(MUsuarioTrabajador muTrabajador,String passwordEnconde)
+    public Usuario(MUsuarioTrabajador muTrabajador,TipoUsuario tipoUsuarioTrabajador,String passwordEnconde)
     {   
         this.correo = muTrabajador.correo();
         this.contraseña = passwordEnconde;
         this.activo = 1;
         this.token = muTrabajador.token();
         this.tokenCelular = muTrabajador.tokenCelular();
-        this.tipoUsuarioId = muTrabajador.tipoUsuarioId();
+        this.tipoUsuario = tipoUsuarioTrabajador;
     }
     public void actualizarUsuario(MUsuarioActualizar mUsuarioActualizar)
     {
@@ -130,11 +124,7 @@ public class Usuario implements UserDetails{
     public void setConexion(List<Conexion> conexion) {
         this.conexion = conexion;
     }
-    
-    
-    
-    
-    
+
     public List<Pedidos> getPedidos() {
         return pedidos;
     }
@@ -152,22 +142,7 @@ public class Usuario implements UserDetails{
     public void setid(Long id) {
         this.id = id;
     }
-    
 
-    
-    public Usuario()
-    {
-        
-    }
-
-  /**  public String getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(String usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-**/
     public String getCorreo() {
         return correo;
     }
@@ -208,12 +183,12 @@ public class Usuario implements UserDetails{
         this.tokenCelular = tokenCelular;
     }
 
-    public Long getTipoUsuarioId() {
-        return tipoUsuarioId;
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
     }
 
-    public void setTipoUsuarioId(Long tipoUsuarioId) {
-        this.tipoUsuarioId = tipoUsuarioId;
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
     
     public Date getCreateAt() {
@@ -224,13 +199,12 @@ public class Usuario implements UserDetails{
         this.createAt = createAt;
     }
     
-    
-    
+
     private static final long serialVersionUID = 1L;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_".concat(tipoUsuario.getNombre())));
     }
 
     @Override

@@ -33,11 +33,11 @@ public class TipoUsuario implements Serializable{
     @Column(nullable = false)
     private String nombre;
 
-    
+    /**
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tipoUsuarioId", referencedColumnName = "tipoUsuarioId")
+    @JoinColumn(name = "tipoUsuarioId", referencedColumnName = "tipoUsuario")
     private List<Usuario> usuarios = new ArrayList<>();
-
+**/
     public TipoUsuario(){}
     
     public TipoUsuario(MTipoUsuarioRegistro tipoUsuarioRegistro)

@@ -4,8 +4,10 @@
  */
 package com.example.demo.service;
 
+import com.example.demo.dao.ITipoUsuarioDao;
 import com.example.demo.dao.ITrabajadorDao;
 import com.example.demo.dao.IUsuarioDao;
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Trabajador;
 import com.example.demo.entity.Usuario;
 import com.example.demo.infra.security.DecodeToken;
@@ -27,14 +29,18 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
     
     private ITrabajadorDao trabajadorDao;
     private IUsuarioDao usuarioDao;
+
+    private ITipoUsuarioDao tipoUsuarioDao;
     private BCryptPasswordEncoder passwordEncoder;
     private DecodeToken decodeToken;
-    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken)
+    public ITrabajadorServiceImpl(ITrabajadorDao trabajadorDao,IUsuarioDao usuarioDao,BCryptPasswordEncoder passwordEncoder,DecodeToken decodeToken
+    ,ITipoUsuarioDao tipoUsuarioDao)
     {
         this.trabajadorDao = trabajadorDao;
         this.usuarioDao = usuarioDao;
         this.passwordEncoder = passwordEncoder;
         this.decodeToken = decodeToken;
+        this.tipoUsuarioDao=tipoUsuarioDao;
     }
     
     @Override
@@ -44,7 +50,8 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
 
     @Override
     public Trabajador save(MUsuarioTrabajador muTrabajador) {
-        Usuario usuario = new Usuario(muTrabajador, passwordEncoder.encode(muTrabajador.contraseña()));
+        TipoUsuario tipoUsuario = tipoUsuarioDao.getReferenceById(1l);
+        Usuario usuario = new Usuario(muTrabajador,tipoUsuario, passwordEncoder.encode(muTrabajador.contraseña()));
         Trabajador trabajador = new Trabajador(muTrabajador, usuario);
         trabajadorDao.save(trabajador);
         usuarioDao.save(usuario);

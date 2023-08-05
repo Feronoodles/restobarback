@@ -1,5 +1,6 @@
 package com.example.demo.model.usuario;
 
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Usuario;
 
 import javax.validation.constraints.Email;
@@ -10,11 +11,11 @@ public record MUsuarioVista(
         String correo,
         int activo,
         String tokenCelular,
-        Long tipoUsuarioId
+        TipoUsuario tipoUsuario
 ) {
     public MUsuarioVista(Usuario usuario)
     {
-        this(usuario.getid(), usuario.getCorreo(), usuario.getActivo(), usuario.getTokenCelular(),usuario.getTipoUsuarioId());
+        this(usuario.getid(), usuario.getCorreo(), usuario.getActivo(), usuario.getTokenCelular(),usuario.getTipoUsuario());
     }
 
 }

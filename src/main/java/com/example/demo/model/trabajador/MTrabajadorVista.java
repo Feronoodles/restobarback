@@ -4,8 +4,11 @@
  */
 package com.example.demo.model.trabajador;
 
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Trabajador;
 import com.example.demo.entity.Usuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
+
 import java.util.Date;
 
 /**
@@ -23,11 +26,12 @@ public record MTrabajadorVista(
         
         Long usuarioId,
         String correo,
-        int activo
+        int activo,
+        MTipoUsuarioVista tipoUsuario
         ) {
     public MTrabajadorVista(Trabajador trabajador){
         this(trabajador.getTrabajadorId(), trabajador.getNombre(),trabajador.getDireccion(),trabajador.getFechaNacimiento(),trabajador.getFechaInicioTrabajo(),trabajador.getSalario(),
-        trabajador.getTipoTrabajadorId(), trabajador.getUsuario().getid(),trabajador.getUsuario().getCorreo(), trabajador.getUsuario().getActivo());
+        trabajador.getTipoTrabajadorId(), trabajador.getUsuario().getid(),trabajador.getUsuario().getCorreo(), trabajador.getUsuario().getActivo(),new MTipoUsuarioVista(trabajador.getUsuario().getTipoUsuario()));
         
     }
 }

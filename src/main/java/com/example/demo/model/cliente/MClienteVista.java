@@ -4,6 +4,9 @@
  */
 package com.example.demo.model.cliente;
 import com.example.demo.entity.Cliente;
+import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
+
 import java.util.Date;
 /**
  *
@@ -18,11 +21,11 @@ public record MClienteVista(
          Long idUsuario,
          String correo,
          int activo,
-         Long tipoUsuarioId
+         MTipoUsuarioVista tipoUsuario
         ) {
     public MClienteVista(Cliente cliente){
         this(cliente.getClienteId(),cliente.getDireccion(),cliente.getFechaNacimiento(),cliente.getName(),cliente.getUsuario().getid(),cliente.getUsuario().getCorreo(),cliente.getUsuario().getActivo()
-        , cliente.getUsuario().getTipoUsuarioId());
+        , new MTipoUsuarioVista(cliente.getUsuario().getTipoUsuario()));
     }
     
 }

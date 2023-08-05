@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.example.demo.model.trabajador;
+import com.example.demo.entity.TipoUsuario;
+
 import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -32,9 +34,8 @@ public record MUsuarioTrabajador(
         String contraseña,
         @NotBlank
         String token,
-        String tokenCelular,
-        @NotNull
-        Long tipoUsuarioId
+        String tokenCelular
+
         ) {
     
 }

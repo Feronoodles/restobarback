@@ -37,7 +37,7 @@ public class MUsuario {
         this.correo = usuario.getCorreo();
         this.token = usuario.getToken();
         this.tokenCelular = usuario.getTokenCelular();
-        this.tipoUsuarioId = usuario.getTipoUsuarioId();
+        this.tipoUsuarioId = usuario.getTipoUsuario().getTipoUsuarioId();
     }
     
     public Long getId() {
