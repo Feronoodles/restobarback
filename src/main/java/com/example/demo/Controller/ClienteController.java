@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -55,6 +56,7 @@ public class ClienteController {
 
     @GetMapping("/ver_cliente")
     @SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<MClienteVista> verCliente(@RequestHeader(value = "Authorization",required = false) String encoding)
     {
         Cliente cliente = clienteService.buscarCliente(encoding);
