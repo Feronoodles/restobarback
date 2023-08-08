@@ -19,6 +19,8 @@ import org.springframework.data.repository.CrudRepository;
 public interface ITipoUsuarioDao extends JpaRepository<TipoUsuario, Long>{
     
     public List<TipoUsuario> findByTipoUsuarioId(Long id);
+
+    public TipoUsuario findByNombre(String nombre);
     
    // @Query("select new com.example.demo.model.MTipoUsuarioVista(t.tipoUsuarioId,t.nombre) from Tipo_Usuario t")
    // public List<MTipoUsuarioVista> findDetails();

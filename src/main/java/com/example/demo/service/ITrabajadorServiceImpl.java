@@ -50,7 +50,7 @@ public class ITrabajadorServiceImpl implements ITrabajadorService{
 
     @Override
     public Trabajador save(MUsuarioTrabajador muTrabajador) {
-        TipoUsuario tipoUsuario = tipoUsuarioDao.getReferenceById(1l);
+        TipoUsuario tipoUsuario = tipoUsuarioDao.findByNombre("TRABAJADOR");
         Usuario usuario = new Usuario(muTrabajador,tipoUsuario, passwordEncoder.encode(muTrabajador.contraseña()));
         Trabajador trabajador = new Trabajador(muTrabajador, usuario);
         trabajadorDao.save(trabajador);

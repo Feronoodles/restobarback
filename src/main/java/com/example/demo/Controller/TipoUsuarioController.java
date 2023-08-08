@@ -35,8 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @SecurityRequirement(name = "bearer-key")
 public class TipoUsuarioController {
-    @Autowired
+
     private ITipoUsuarioService tipoUsuarioService;
+
+    public TipoUsuarioController(ITipoUsuarioService tipoUsuarioService)
+    {
+        this.tipoUsuarioService = tipoUsuarioService;
+    }
     
     @GetMapping("/tipo_usuario")
     public ResponseEntity<Page<MTipoUsuarioVista>> listaTipoUsuario(@PageableDefault(size = 10) Pageable paginacion)

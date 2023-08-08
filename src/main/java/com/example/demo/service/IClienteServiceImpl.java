@@ -51,7 +51,7 @@ public class IClienteServiceImpl implements IClienteService{
 
     @Override
     public void save(MUsuarioCliente mucliente) {
-        TipoUsuario tipoUsuario = tipoUsuarioDao.getReferenceById(2l);
+        TipoUsuario tipoUsuario = tipoUsuarioDao.findByNombre("CLIENTE");
         Usuario usuario = new Usuario(mucliente,tipoUsuario, passwordEncoder.encode(mucliente.contraseña()));
         Cliente cliente = new Cliente(mucliente);
         usuarioDao.save(usuario);
