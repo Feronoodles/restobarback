@@ -20,7 +20,7 @@ public interface ITipoUsuarioService {
     
     public Page<TipoUsuario> findAll(Pageable paginacion);
     
-    public void saveTipoUsuario(MTipoUsuarioRegistro tusuario);
+    public TipoUsuario saveTipoUsuario(MTipoUsuarioRegistro tusuario);
     
     public List<TipoUsuario> getTipoUsuarios(Long id);
     

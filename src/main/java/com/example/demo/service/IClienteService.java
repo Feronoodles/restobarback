@@ -18,6 +18,6 @@ import org.springframework.data.domain.Pageable;
 public interface IClienteService {
     public List<Cliente> findAll();
     public Page<Cliente> findAll(Pageable paginacion);
-    public void save(MUsuarioCliente mucliente);
+    public Cliente save(MUsuarioCliente mucliente);
     public Cliente buscarCliente(String encode);
 }

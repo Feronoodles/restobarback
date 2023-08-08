@@ -5,10 +5,14 @@
 package com.example.demo.Controller;
 
 import com.example.demo.entity.Cliente;
+import com.example.demo.entity.Trabajador;
 import com.example.demo.entity.Usuario;
 import com.example.demo.model.cliente.MClienteVista;
 import com.example.demo.model.cliente.MUsuarioCliente;
+import com.example.demo.model.trabajador.MTrabajadorVista;
 import com.example.demo.service.IClienteService;
+
+import java.net.URI;
 import java.util.List;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
@@ -47,11 +52,17 @@ public class ClienteController {
     }
     
     @PostMapping("/crear_cliente")
-    public ResponseEntity<Void> crearCliente(@RequestBody @Valid MUsuarioCliente ucliente)
+    public ResponseEntity<MClienteVista> crearCliente(@RequestBody @Valid MUsuarioCliente ucliente, UriComponentsBuilder uriComponentsBuilder)
     {
-        
-        clienteService.save(ucliente);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        Cliente cliente = clienteService.save(ucliente);
+
+        MClienteVista clienteVista = new MClienteVista(cliente);
+
+        URI url = uriComponentsBuilder.path("/api/ver_cliente").buildAndExpand(cliente.getClienteId()).toUri();
+
+        return ResponseEntity.created(url).body(clienteVista);
+
+
     }
 
     @GetMapping("/ver_cliente")

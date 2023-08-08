@@ -34,10 +34,10 @@ public class ITipoUsuarioServiceImpl implements ITipoUsuarioService{
     }
 
     @Override
-    public void saveTipoUsuario(MTipoUsuarioRegistro tusuario) {
+    public TipoUsuario saveTipoUsuario(MTipoUsuarioRegistro tusuario) {
         TipoUsuario tipoUsuario = new TipoUsuario(tusuario);
         
-        tipoUsuarioDao.save(tipoUsuario);
+        return tipoUsuarioDao.save(tipoUsuario);
     }
 
     @Override

@@ -50,13 +50,13 @@ public class IClienteServiceImpl implements IClienteService{
     }
 
     @Override
-    public void save(MUsuarioCliente mucliente) {
+    public Cliente save(MUsuarioCliente mucliente) {
         TipoUsuario tipoUsuario = tipoUsuarioDao.findByNombre("CLIENTE");
         Usuario usuario = new Usuario(mucliente,tipoUsuario, passwordEncoder.encode(mucliente.contraseña()));
         Cliente cliente = new Cliente(mucliente);
         usuarioDao.save(usuario);
         cliente.setUsuario(usuario);
-        clienteDao.save(cliente);
+        return clienteDao.save(cliente);
     }
 
     @Override

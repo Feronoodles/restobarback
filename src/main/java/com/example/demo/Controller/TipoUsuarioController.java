@@ -4,10 +4,16 @@
  */
 package com.example.demo.Controller;
 
+import com.example.demo.entity.Cliente;
+import com.example.demo.entity.TipoTrabajador;
 import com.example.demo.entity.TipoUsuario;
+import com.example.demo.model.cliente.MClienteVista;
+import com.example.demo.model.tipo_trabajador.MTipoTrabajadorVista;
 import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
 import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import com.example.demo.service.ITipoUsuarioService;
+
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,12 +26,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -53,49 +55,25 @@ public class TipoUsuarioController {
         
     }
     @PostMapping("/crear_tipo_usuario")
-    public ResponseEntity<Void> agregarTipoUsuario(@RequestBody MTipoUsuarioRegistro tipousu)
+    public ResponseEntity<MTipoUsuarioVista> agregarTipoUsuario(@RequestBody MTipoUsuarioRegistro tipousu, UriComponentsBuilder uriComponentsBuilder)
     {
-        tipoUsuarioService.saveTipoUsuario(tipousu);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+
+
+        TipoUsuario tipoUsuario = tipoUsuarioService.saveTipoUsuario(tipousu);
+
+        MTipoUsuarioVista mTipoUsuarioVista =new MTipoUsuarioVista(tipoUsuario);
+        URI url = uriComponentsBuilder.path("/api_ver_tipo_usuario/{tipoUsuarioId}").buildAndExpand(tipoUsuario.getTipoUsuarioId()).toUri();
+        return ResponseEntity.created(url).body(mTipoUsuarioVista);
+
     }
-    
-    @PostMapping("/usuarios_tipousuarios")
-    public ResponseEntity<?> verUsuariosTipo(@RequestBody TipoUsuario tipoUsuario)
+
+
+    @GetMapping("/ver_tipo_usuario/{tipoUsuarioId}")
+    public ResponseEntity<MTipoUsuarioVista> mostrarTipoUsuario(@PathVariable Long tipoTrabajadorId)
     {
-        List<TipoUsuario> listaTipoUsuario = tipoUsuarioService.getTipoUsuarios(tipoUsuario.getTipoUsuarioId());
-        
-        if(listaTipoUsuario!=null)
-        {
-            if(listaTipoUsuario.size()!=0)
-            {
-                return new ResponseEntity<>(listaTipoUsuario,HttpStatus.OK);
-            }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-        }
-            else
-            {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }    
-    }
-    
-    @PutMapping("update_tipo_usuario")
-    public ResponseEntity<?> updateTipoUsuario(@RequestBody TipoUsuario tipousu)
-    {
-        TipoUsuario tipou = null; 
-        tipou = tipoUsuarioService.findByIdTipoUsuario(tipousu.getTipoUsuarioId());
-        if(tipou != null)
-        {
-            tipou.setNombre(tipousu.getNombre());
-            tipoUsuarioService.updateTipoUsuario(tipou);
-            return new ResponseEntity<>(tipou,HttpStatus.ACCEPTED);
-        }
-        else{
-            return new ResponseEntity<Void>(HttpStatus.NOT_MODIFIED);
-        }
-        
-        
+        TipoUsuario tipoUsuario = tipoUsuarioService.findByIdTipoUsuario(tipoTrabajadorId);
+
+        MTipoUsuarioVista mTipoUsuarioVista = new MTipoUsuarioVista(tipoUsuario);
+        return ResponseEntity.ok(mTipoUsuarioVista);
     }
 }
