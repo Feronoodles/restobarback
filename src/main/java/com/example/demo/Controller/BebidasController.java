@@ -14,11 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  *
@@ -42,9 +41,23 @@ public class BebidasController {
         return ResponseEntity.ok(bebidasServices.findAll(pagination).map(MBebidasVista:: new));
     }
     @PostMapping("crear_bebida")
-    public ResponseEntity<Void> guardarBebida(@RequestBody MBebidasRegistro bebidaRegistro)
+    public ResponseEntity<MBebidasVista> guardarBebida(@RequestBody MBebidasRegistro bebidaRegistro, UriComponentsBuilder uriComponentsBuilder)
     {
-        bebidasServices.guardarBebidas(bebidaRegistro);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        Bebidas bebidas = bebidasServices.guardarBebidas(bebidaRegistro);
+
+        MBebidasVista mBebidasVista = new MBebidasVista(bebidas);
+
+        URI url = uriComponentsBuilder.path("/api/ver_bebida/{idBebida}").buildAndExpand(bebidas.getBebidaId()).toUri();
+
+        return ResponseEntity.created(url).body(mBebidasVista);
+    }
+
+    @GetMapping("/ver_bebida/{idBebida}")
+    public ResponseEntity<MBebidasVista> mostrarBebida(@PathVariable Long idBebida){
+        Bebidas bebidas = bebidasServices.mostrarBebida(idBebida);
+
+        MBebidasVista mBebidasVista = new MBebidasVista(bebidas);
+
+        return ResponseEntity.ok(mBebidasVista);
     }
 }

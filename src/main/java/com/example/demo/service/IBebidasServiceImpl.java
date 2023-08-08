@@ -33,10 +33,15 @@ public class IBebidasServiceImpl implements IBebidasService{
     }
 
     @Override
-    public void guardarBebidas(MBebidasRegistro bebidaRegistro) {
+    public Bebidas guardarBebidas(MBebidasRegistro bebidaRegistro) {
         Bebidas bebida = new Bebidas(bebidaRegistro);
-        bebidasDao.save(bebida);
+        return bebidasDao.save(bebida);
     }
-    
-    
+
+    @Override
+    public Bebidas mostrarBebida(Long bebidasId) {
+        return bebidasDao.getReferenceById(bebidasId);
+    }
+
+
 }

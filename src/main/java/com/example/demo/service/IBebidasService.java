@@ -6,6 +6,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Bebidas;
 import com.example.demo.model.bebidas.MBebidasRegistro;
+import com.example.demo.model.bebidas.MBebidasVista;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,5 +18,7 @@ import org.springframework.data.domain.Pageable;
 public interface IBebidasService {
     public Page<Bebidas> findAll(Pageable paginacion);
     
-    public void guardarBebidas(MBebidasRegistro bebida);
+    public Bebidas guardarBebidas(MBebidasRegistro bebida);
+
+    public Bebidas mostrarBebida(Long bebidasId);
 }

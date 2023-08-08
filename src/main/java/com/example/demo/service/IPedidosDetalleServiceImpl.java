@@ -47,7 +47,7 @@ public class IPedidosDetalleServiceImpl implements IPedidosDetalleService{
     }
 
     @Override
-    public void save(MPedidoDetalleRegistro pedidoDetalleRegistro) {
+    public PedidoDetalle save(MPedidoDetalleRegistro pedidoDetalleRegistro) {
         
         double gastoTotal = 0;
        
@@ -70,10 +70,15 @@ public class IPedidosDetalleServiceImpl implements IPedidosDetalleService{
         
         PedidoDetalle pedidoDetalle = new PedidoDetalle(pedidoDetalleRegistro,plato,bebida);
         pedidoService.actualizarPedido(pedidoActualizar);
-        pedidoDetalleDao.save(pedidoDetalle);
+        return pedidoDetalleDao.save(pedidoDetalle);
         
         
         
     }
-    
+
+    @Override
+    public PedidoDetalle mostrarPedidoDetalle(Long pedidoDetalleId) {
+        return pedidoDetalleDao.getReferenceById(pedidoDetalleId);
+    }
+
 }

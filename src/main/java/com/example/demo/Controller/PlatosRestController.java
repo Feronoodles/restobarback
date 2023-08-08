@@ -55,7 +55,7 @@ public class PlatosRestController {
     @GetMapping("/platos/{index}/{size}")
     public ResponseEntity<?> listaPlatos(@PathVariable (value="index")int index,@PathVariable (value="size")int size )
     {
-        System.out.println("hola fer"+index+"hola: "+size);
+
         List<Platos> platos = platoService.findAll(index, size);
         if(platos!=null)
         {

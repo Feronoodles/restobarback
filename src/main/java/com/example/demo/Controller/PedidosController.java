@@ -5,8 +5,10 @@
 package com.example.demo.Controller;
 
 import com.example.demo.entity.Pedidos;
+import com.example.demo.entity.Platos;
 import com.example.demo.model.pedidos.MPedidoRegistro;
 import com.example.demo.model.pedidos.MPedidoVista;
+import com.example.demo.model.platos.MPlatosVista;
 import com.example.demo.service.IPedidosService;
 import java.net.URI;
 import java.util.List;
@@ -62,5 +64,13 @@ public class PedidosController {
         URI url = uriComponentsBuilder.path("/api/ver_pedidos/{idPedido}").buildAndExpand(pedido.getPedidosId()).toUri();
         return ResponseEntity.created(url).body(pedidoVista);
     }
-    
+    @GetMapping("/ver_pedido/{idPedido}")
+    public ResponseEntity<MPedidoVista> mostrarPedido(@PathVariable Long idPedido)
+    {
+        Pedidos pedido = pedidosService.getPedidoBySQL(idPedido);
+
+        MPedidoVista platoVista = new MPedidoVista(pedido);
+
+        return ResponseEntity.ok(platoVista);
+    }
 }

@@ -7,6 +7,8 @@ package com.example.demo.model.cliente;
 import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Usuario;
 import com.example.demo.entity.Cliente;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

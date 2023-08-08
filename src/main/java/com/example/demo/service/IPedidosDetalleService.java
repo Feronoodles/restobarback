@@ -16,5 +16,9 @@ import org.springframework.data.domain.Pageable;
 public interface IPedidosDetalleService {
     public Page<PedidoDetalle> buscarPedidosDetalle(Pageable paginacion);
     
-    public void save(MPedidoDetalleRegistro pedidoDetalleRegistro);
+    public PedidoDetalle save(MPedidoDetalleRegistro pedidoDetalleRegistro);
+
+    public PedidoDetalle mostrarPedidoDetalle(Long pedidoDetalleId);
+
+
 }

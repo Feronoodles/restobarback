@@ -69,9 +69,9 @@ public class TipoUsuarioController {
 
 
     @GetMapping("/ver_tipo_usuario/{tipoUsuarioId}")
-    public ResponseEntity<MTipoUsuarioVista> mostrarTipoUsuario(@PathVariable Long tipoTrabajadorId)
+    public ResponseEntity<MTipoUsuarioVista> mostrarTipoUsuario(@PathVariable Long tipoUsuarioId)
     {
-        TipoUsuario tipoUsuario = tipoUsuarioService.findByIdTipoUsuario(tipoTrabajadorId);
+        TipoUsuario tipoUsuario = tipoUsuarioService.findByIdTipoUsuario(tipoUsuarioId);
 
         MTipoUsuarioVista mTipoUsuarioVista = new MTipoUsuarioVista(tipoUsuario);
         return ResponseEntity.ok(mTipoUsuarioVista);
