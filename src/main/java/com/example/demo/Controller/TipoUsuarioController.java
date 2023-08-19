@@ -26,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -46,6 +47,7 @@ public class TipoUsuarioController {
     }
     
     @GetMapping("/tipo_usuario")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<Page<MTipoUsuarioVista>> listaTipoUsuario(@PageableDefault(size = 10) Pageable paginacion)
     {
         Page<TipoUsuario> listaTipoUsuario = tipoUsuarioService.findAll(paginacion);
@@ -55,6 +57,7 @@ public class TipoUsuarioController {
         
     }
     @PostMapping("/crear_tipo_usuario")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MTipoUsuarioVista> agregarTipoUsuario(@RequestBody MTipoUsuarioRegistro tipousu, UriComponentsBuilder uriComponentsBuilder)
     {
 
@@ -69,6 +72,7 @@ public class TipoUsuarioController {
 
 
     @GetMapping("/ver_tipo_usuario/{tipoUsuarioId}")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MTipoUsuarioVista> mostrarTipoUsuario(@PathVariable Long tipoUsuarioId)
     {
         TipoUsuario tipoUsuario = tipoUsuarioService.findByIdTipoUsuario(tipoUsuarioId);

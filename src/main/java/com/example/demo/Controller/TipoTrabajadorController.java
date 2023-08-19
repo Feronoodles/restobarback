@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class TipoTrabajadorController {
     private ITipoTrabajadorService tipoTrabajadorService;
     
     @GetMapping("/tipo_trabajador")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<List<MTipoTrabajadorVista>> listaTipoTrabajador()
     {
         List<TipoTrabajador> listaTipoTrabajador = tipoTrabajadorService.findAll();
@@ -45,6 +47,7 @@ public class TipoTrabajadorController {
     }
     
     @GetMapping("/ver_tipo_trabajador/{tipoTrabajadorId}")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MTipoTrabajadorVista> mostrarTipoTrabajador(@PathVariable Long tipoTrabajadorId)
     {
         TipoTrabajador tipoTrabajador = tipoTrabajadorService.findByTipoTrabajadorId(tipoTrabajadorId);
@@ -54,6 +57,7 @@ public class TipoTrabajadorController {
     }
     
     @PostMapping("/crear_tipo_trabajador")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MTipoTrabajadorVista> crearTipoTrabajador(@RequestBody MTipoTrabajadorRegistro tipoTrabajadorRegistro,UriComponentsBuilder uriComponentsBuilder)
     {   
         TipoTrabajador tipoTrabajador = tipoTrabajadorService.save(tipoTrabajadorRegistro);

@@ -64,6 +64,8 @@ public class TrabajadorController {
             
             
     @PostMapping("/crear_trabajador")
+    @SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MTrabajadorVista> crearTrabajador(@RequestBody @Valid MUsuarioTrabajador muTrabajador,UriComponentsBuilder uriComponentsBuilder)
     {
         Trabajador trabajador = trabajadorService.save(muTrabajador);

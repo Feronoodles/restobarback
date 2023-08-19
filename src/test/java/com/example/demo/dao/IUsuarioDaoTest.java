@@ -6,9 +6,13 @@ package com.example.demo.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.demo.entity.TipoUsuario;
 import com.example.demo.entity.Usuario;
 import com.example.demo.model.cliente.MUsuarioCliente;
 import java.util.Date;
+
+import com.example.demo.model.tipo_usuario.MTipoUsuarioRegistro;
+import com.example.demo.model.tipo_usuario.MTipoUsuarioVista;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +29,21 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 public class IUsuarioDaoTest {
     @Autowired
     private IUsuarioDao usuarioDao;
+
+    @Autowired
+    private ITipoUsuarioDao tipoUsuarioDao;
     
     @Test
     void testGuardarEmpleado(){
         //given - dado o condición previo o configuración
         
-        MUsuarioCliente cliente = new MUsuarioCliente("arges 127", null, "fernando urlich", "ferourlich@gmail.com", "Facil123", "sad", "sadas", 2l);
-        Usuario usuario = new Usuario(cliente);
+        MUsuarioCliente cliente = new MUsuarioCliente("arges 127", null, "fernando urlich", "prueba@gmail.com", "Facil123", "sad", "sadas");
+        MTipoUsuarioRegistro mTipoUsuarioRegistro = new MTipoUsuarioRegistro("Cliente");
+
+        TipoUsuario tipoUsuario = tipoUsuarioDao.save(new TipoUsuario(mTipoUsuarioRegistro));
+
+
+        Usuario usuario = new Usuario(cliente,tipoUsuario,"123");
         System.out.println("llega aqui?");
         //when - accion o el comportamiento que vamos a probar
         Usuario usuarioGuardado = usuarioDao.save(usuario);

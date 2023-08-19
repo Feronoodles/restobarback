@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -41,6 +42,7 @@ public class BebidasController {
         return ResponseEntity.ok(bebidasServices.findAll(pagination).map(MBebidasVista:: new));
     }
     @PostMapping("crear_bebida")
+    @PreAuthorize("hasRole('TRABAJADOR')")
     public ResponseEntity<MBebidasVista> guardarBebida(@RequestBody MBebidasRegistro bebidaRegistro, UriComponentsBuilder uriComponentsBuilder)
     {
         Bebidas bebidas = bebidasServices.guardarBebidas(bebidaRegistro);
