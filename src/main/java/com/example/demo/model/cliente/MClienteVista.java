@@ -15,7 +15,7 @@ import java.util.Date;
 public record MClienteVista(
          Long idCliente,
          String direccion,
-         Date fechaNacimiento,
+         String telefono,
          String name,
         
          Long idUsuario,
@@ -24,7 +24,7 @@ public record MClienteVista(
          MTipoUsuarioVista tipoUsuario
         ) {
     public MClienteVista(Cliente cliente){
-        this(cliente.getClienteId(),cliente.getDireccion(),cliente.getFechaNacimiento(),cliente.getName(),cliente.getUsuario().getid(),cliente.getUsuario().getCorreo(),cliente.getUsuario().getActivo()
+        this(cliente.getClienteId(),cliente.getDireccion(),cliente.getTelefono(),cliente.getName(),cliente.getUsuario().getid(),cliente.getUsuario().getCorreo(),cliente.getUsuario().getActivo()
         , new MTipoUsuarioVista(cliente.getUsuario().getTipoUsuario()));
     }
     

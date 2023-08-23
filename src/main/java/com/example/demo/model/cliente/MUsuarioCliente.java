@@ -19,10 +19,10 @@ import javax.validation.constraints.NotNull;
  * @author User
  */
 public record MUsuarioCliente(
-        @NotBlank
+
         String direccion,
         @NotNull
-         Date fechaNacimiento,
+        String telefono,
         @NotBlank 
         String name,
         @NotBlank

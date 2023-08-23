@@ -37,8 +37,8 @@ public class IUsuarioDaoTest {
     void testGuardarEmpleado(){
         //given - dado o condición previo o configuración
         
-        MUsuarioCliente cliente = new MUsuarioCliente("arges 127", null, "fernando urlich", "prueba@gmail.com", "Facil123", "sad", "sadas");
-        MTipoUsuarioRegistro mTipoUsuarioRegistro = new MTipoUsuarioRegistro("Cliente");
+        MUsuarioCliente cliente = new MUsuarioCliente("arges 127", "941716084", "fernando urlich", "prueba@gmail.com", "Facil123", "sad", "sadas");
+        MTipoUsuarioRegistro mTipoUsuarioRegistro = new MTipoUsuarioRegistro("INVITADO");
 
         TipoUsuario tipoUsuario = tipoUsuarioDao.save(new TipoUsuario(mTipoUsuarioRegistro));
 

@@ -38,11 +38,11 @@ public class Cliente implements Serializable{
     @Column(nullable = false)
     private String name;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String direccion;
     
     @Column(nullable = false)
-    private Date fechaNacimiento;
+    private String telefono;
     
     public Cliente()
     {
@@ -52,7 +52,7 @@ public class Cliente implements Serializable{
     {
         this.name = mucliente.name();
         this.direccion = mucliente.direccion();
-        this.fechaNacimiento = mucliente.fechaNacimiento();
+        this.telefono = mucliente.telefono();
         
     }
 
@@ -89,12 +89,12 @@ public class Cliente implements Serializable{
         this.direccion = direccion;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
     
     private static final Long serialVersionUID = 1L;
